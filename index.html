@@ -235,7 +235,8 @@
       startY: 0,
       endX: 0,
       endY: 0,
-      progress: 0
+      progress: 0,
+      owner: "pitcher"
     };
 
     const slider = {
@@ -302,7 +303,14 @@
         ball.progress = 0;
         ball.active = true;
         draw();
-        animateBall();
+        animateBall(() => {
+          ball.owner = "catcher"; // míč chytil catcher
+
+          // pokud není strikeout ani ball four, catcher vrátí míč zpět
+          if (strikeCount < 3 && ballCount < 4) {
+            setTimeout(() => returnBallToPitcher(), 800);
+          }
+        });
 
         ballCountInProgress = true;
 
@@ -393,7 +401,14 @@
           ball.active = true;
           slider.active = false;
           draw();
-          animateBall();
+          animateBall(() => {
+            ball.owner = "catcher"; // míč chytil catcher
+
+            // pokud není strikeout ani ball four, catcher vrátí míč zpět
+            if (strikeCount < 3 && ballCount < 4) {
+              setTimeout(() => returnBallToPitcher(), 800);
+            }
+          });
 
           const waitForBallDone = setInterval(() => {
             if (!ball.active) {
@@ -444,6 +459,43 @@
       ball.y = ball.startY + (ball.endY - ball.startY) * ball.progress;
       draw();
       requestAnimationFrame(() => animateBall(onComplete));
+    }
+    
+    // Funkce pro návrat míče zpět k nadhazovači
+    function returnBallToPitcher() {
+      const pitcher = players.find(p => p.name === "Nadhazovac");
+      let ownerX, ownerY;
+
+      if (ball.owner === "catcher") {
+        const catcher = players.find(p => p.name === "Catcher");
+        ownerX = catcher.x + playerSize / 2;
+        ownerY = catcher.y + playerSize / 2;
+      } else if (ball.owner === "polar") {
+        const polar = players.find(p => p.name === "Polar_SecondBase");
+        ownerX = polar.x + playerSize / 2;
+        ownerY = polar.y + playerSize / 2;
+      } else if (ball.owner === "firstBase") {
+        const base = POS.FIRST;
+        ownerX = base.x + playerSize / 2;
+        ownerY = base.y + playerSize / 2;
+      } else {
+        // fallback (kde míč skončil)
+        ownerX = ball.x;
+        ownerY = ball.y;
+      }
+
+      ball.startX = ownerX;
+      ball.startY = ownerY;
+      ball.endX = pitcher.x + playerSize / 2;
+      ball.endY = pitcher.y + playerSize / 2;
+      ball.x = ball.startX;
+      ball.y = ball.startY;
+      ball.progress = 0;
+      ball.active = true;
+
+      animateBall(() => {
+        ball.owner = "pitcher"; // zpět u nadhazovače
+      });
     }
     
     let pickoffAttempt1B = false;
@@ -516,7 +568,10 @@
       animateBall(() => {
         resultDisplay.textContent = "SAFE!";
         resultDisplay.style.color = "green";
+        ball.owner = "firstBase"; // míč má hráč na 1B
         draw();
+
+        setTimeout(() => returnBallToPitcher(), 500);
       });
     }
 
@@ -561,6 +616,7 @@
       animateBall(() => {
         resultDisplay.textContent = "SAFE!";
         resultDisplay.style.color = "green";
+        ball.owner = "polar";
 
         // návrat Polara zpět na původní pozici
         if (polar) {
@@ -568,6 +624,8 @@
             animatePolarBack(polar);
           }, 500);
         }
+
+        setTimeout(() => returnBallToPitcher(), 500);
 
         draw();
       });

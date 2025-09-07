@@ -71,6 +71,7 @@
     <!-- Pickoff tlačítko – bude se přemisťovat pod 1. metu -->
     <button id="pickoffButton" class="pickoffBtn" tabindex="-1" style="display:none; position:absolute;">1B</button>
     <button id="pickoffButton2B" class="pickoffBtn" tabindex="-1" style="display:none; position:absolute;">2B</button>
+    <button id="pickoffButton3B" class="pickoffBtn" tabindex="-1" style="display:none; position:absolute;">3B</button>
   </div>
 
   <!-- Ostatní tlačítka a info pod hřištěm -->
@@ -500,24 +501,46 @@
     
     let pickoffAttempt1B = false;
     let pickoffAttempt2B = false;
+    let pickoffAttempt3B = false;
 
     const pickoffBtn1B = document.getElementById("pickoffButton");
     const pickoffBtn2B = document.getElementById("pickoffButton2B");
+    const pickoffBtn3B = document.getElementById("pickoffButton3B");
 
     // Kliknutí na 1B
     pickoffBtn1B.addEventListener("click", () => {
       pickoffAttempt1B = !pickoffAttempt1B;
       pickoffBtn1B.classList.toggle("active-pickoff", pickoffAttempt1B);
+
       pickoffAttempt2B = false;
       pickoffBtn2B.classList.remove("active-pickoff");
+      
+      pickoffAttempt3B = false;
+      pickoffBtn3B.classList.remove("active-pickoff");
     });
 
     // Kliknutí na 2B
     pickoffBtn2B.addEventListener("click", () => {
       pickoffAttempt2B = !pickoffAttempt2B;
       pickoffBtn2B.classList.toggle("active-pickoff", pickoffAttempt2B);
+
       pickoffAttempt1B = false;
       pickoffBtn1B.classList.remove("active-pickoff");
+
+      pickoffAttempt3B = false;
+      pickoffBtn3B.classList.remove("active-pickoff");
+    });
+
+    // Kliknutí na 3B
+    pickoffBtn3B.addEventListener("click", () => {
+      pickoffAttempt3B = !pickoffAttempt3B;
+      pickoffBtn3B.classList.toggle("active-pickoff", pickoffAttempt3B);
+
+      pickoffAttempt1B = false;
+      pickoffBtn1B.classList.remove("active-pickoff");
+
+      pickoffAttempt2B = false;
+      pickoffBtn2B.classList.remove("active-pickoff");
     });
 
     throwButton.addEventListener('click', () => {
@@ -527,10 +550,17 @@
         startPickoff1B();
         pickoffAttempt1B = false;
         pickoffBtn1B.classList.remove("active-pickoff");
+
       } else if (pickoffAttempt2B) {
         startPickoff2B();
         pickoffAttempt2B = false;
         pickoffBtn2B.classList.remove("active-pickoff");
+
+      } else if (pickoffAttempt3B) {
+        startPickoff3B();
+        pickoffAttempt3B = false;
+        pickoffBtn3B.classList.remove("active-pickoff");
+
       } else {
         // původní logika slideru
         slider.active = true;
@@ -626,6 +656,59 @@
         }
 
         setTimeout(() => returnBallToPitcher(), 500);
+
+        draw();
+      });
+    }
+
+    function startPickoff3B() {
+      const pitcher = players.find(p => p.name === "Nadhazovac");
+      const thirdBase = POS.THIRD;
+      const polar = players.find(p => p.name === "Polar_ThirdBase");
+
+      // uložíme původní pozici Polara
+      if (polar) {
+        polar.originalX = polar.x;
+        polar.originalY = polar.y;
+        polar.defaultImg = polar.img; 
+      }
+
+      // CÍL = střed 3. mety
+      const baseCenterX = thirdBase.x + playerSize / 2;
+      const baseCenterY = thirdBase.y + playerSize / 2;
+
+      ball.startX = pitcher.x + playerSize / 2;
+      ball.startY = pitcher.y + playerSize / 2;
+      ball.endX = baseCenterX;
+      ball.endY = baseCenterY;
+      ball.x = ball.startX;
+      ball.y = ball.startY;
+      ball.progress = 0;
+      ball.active = true;
+
+      draw();
+
+      if (runnerOnThirdBase) {
+        moveRunnerBackToBaseAndLead(runnerOnThirdBase, POS.THIRD);
+      }
+
+      // animace Polara směrem k 3B
+      if (polar) {
+        animatePolarToThird(polar, thirdBase, () => {
+          // čeká u mety
+        });
+      }
+
+      animateBall(() => {
+        resultDisplay.textContent = "SAFE!";
+        resultDisplay.style.color = "green";
+
+        // návrat Polara zpět na původní pozici
+        if (polar) {
+          setTimeout(() => {
+            animatePolarBackFromThird(polar);
+          }, 500);
+        }
 
         draw();
       });
@@ -792,6 +875,74 @@
       }
 
       requestAnimationFrame(animateToBase);
+    }
+
+    function animatePolarToThird(polar, base, onComplete) {
+      const startX = polar.x;
+      const startY = polar.y;
+      const targetX = base.x - 10;  // malý posun, aby to vypadalo jako tag
+      const targetY = base.y - 5;
+      const duration = 500; // 0.5 s (stejně jako míč)
+
+      polar.img = actionImg;
+      polar.state = "runningToBase"; // běží k metě
+
+      const startTime = performance.now();
+
+      function animate(time) {
+        const elapsed = time - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        polar.x = startX + (targetX - startX) * progress;
+        polar.y = startY + (targetY - startY) * progress;
+
+        draw();
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          // stojí na metě → zpět na defaultImg
+          polar.img = polar.defaultImg;
+          polar.state = "tagging"; // stojí u mety
+          draw();
+
+          if (onComplete) onComplete();
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    function animatePolarBackFromThird(polar) {
+      const startX = polar.x;
+      const startY = polar.y;
+      const targetX = polar.originalX;
+      const targetY = polar.originalY;
+      const duration = 500;
+
+      polar.img = actionImg; // zase akce když běží zpět
+
+      const startTime = performance.now();
+
+      function animate(time) {
+        const elapsed = time - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        polar.x = startX + (targetX - startX) * progress;
+        polar.y = startY + (targetY - startY) * progress;
+
+        draw();
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          // když dorazí zpět → defaultní fotka
+          polar.img = polar.defaultImg;
+          draw();
+        }
+      }
+
+      requestAnimationFrame(animate);
     }
 
     function gameLoop() {
@@ -1609,6 +1760,16 @@
         pickoffBtn2B.style.top  = (POS.SECOND.y + 10) + "px";
       } else {
         pickoffBtn2B.style.display = "none";
+      }
+
+      // --- Pickoff tlačítko 3B ---
+      const pickoffBtn3B = document.getElementById("pickoffButton3B");
+      if (runnerOnThirdBase) {
+        pickoffBtn3B.style.display = "inline-block";
+        pickoffBtn3B.style.left = (POS.THIRD.x) + "px";
+        pickoffBtn3B.style.top  = (POS.THIRD.y + 10) + "px";
+      } else {
+        pickoffBtn3B.style.display = "none";
       }
 
       // vykreslíme běžce jdoucí do dugoutu (animace)

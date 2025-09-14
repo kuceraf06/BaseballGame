@@ -7,7 +7,7 @@
 </head>
 <body>
 
-  <div id="gameContainer" style="position:relative; display:inline-block;">
+  <div id="gameContainer" class="gameContainer">
 
     <canvas id="field" width="800" height="600"></canvas>
 
@@ -17,7 +17,7 @@
       <button id="pickoffButton3B" class="pickoffBtn" tabindex="-1">3B</button>
     </div>
 
-    <div id="pitchTypeContainer" style="position:absolute; top:200px; left:380px; z-index:10;">
+    <div id="pitchTypeContainer">
       <button class="pitchTypeBtn activePitch" data-pitch="FB">FB</button>
       <button class="pitchTypeBtn" data-pitch="CH">CH</button>
       <button class="pitchTypeBtn" data-pitch="SL">SL</button>
@@ -29,12 +29,22 @@
 
   <button class="throwButton" id="throwButton" tabindex="-1">Ready</button><br />
   <div id="result"></div>
-  <div id="countDisplay" style="font-size: 20px; font-weight: bold; margin-top: 5px;"></div>
+  <div id="countDisplay" class="display"></div>
+
+  <div id="outsDisplay" class="display">Outs: 0</div>
+
+  <div class="state">
+    <span id="stateIndicator" class="stateIndicator">
+      DEFENSE — You pitch
+    </span>
+    <button id="toggleStateBtn" class="stateBtn">Toggle Off/Def</button>
+  </div>
 
   <script src="js/game-setup.js"></script>
   <script src="js/game-state.js"></script>
   <script src="js/pitching.js"></script>
   <script src="js/pickoff.js"></script>
+  <script src="js/ai-pitching.js"></script>
   <script src="js/game-loop.js"></script>
   <script src="js/runners.js"></script>
   <script src="js/dugout.js"></script>

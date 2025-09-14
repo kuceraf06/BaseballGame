@@ -5,10 +5,12 @@ function updatePitchTypeButtonsPosition() {
   if (!pitcher) return;
   
   pitchTypeContainer.style.left = (pitcher.x + playerSize/2 - pitchTypeContainer.offsetWidth / 2) + 'px';
-  pitchTypeContainer.style.top = (pitcher.y - 60) + 'px'; // 60px nad hlavou
+  pitchTypeContainer.style.top = (pitcher.y - 60) + 'px';
 }
 
 function strikeOut() {
+  endOfAtBat = true;
+
   if (battersQueue.length > 0) {
     const batterOut = nextBatter();
 
@@ -26,16 +28,21 @@ function strikeOut() {
       sendBatterFromOnDeck(newBatter, 'right', () => {
         hideBatterDuringOnDeckAnimation = false;
         resetCount();
+        endOfAtBat = false;
       });
     } else {
       hideBatterDuringOnDeckAnimation = false;
       resetCount();
+      endOfAtBat = false;
     }
   }
+  addOut();
   draw();
 }
 
 function ballFour() {
+  endOfAtBat = true;
+
   if (battersQueue.length > 0) {
     const batterOut = nextBatter(); 
     const newRunner = { name: batterOut.name, img: bezecImg };
@@ -52,10 +59,12 @@ function ballFour() {
     if (newBatter) {
       sendBatterFromOnDeck(newBatter, 'right', () => {
         resetCount();
+        endOfAtBat = false;
         draw();
       });
     } else {
       resetCount();
+      endOfAtBat = false;
       draw();
     }
   }
@@ -152,27 +161,14 @@ function updateSlider() {
     draw();
     animateBall(() => {
       ball.owner = "catcher";
-
-      if (strikeCount < 3 && ballCount < 4) {
-        setTimeout(() => returnBallToPitcher(), 800);
+        if (!endOfAtBat) {
+        setTimeout(() => {
+          if (strikeCount < 3 && ballCount < 4) {
+            returnBallToPitcher();
+          }
+        }, 800);
       }
     });
-
-    ballCountInProgress = true;
-
-    const waitForBall = setInterval(() => {
-      if (!ball.active) {
-        clearInterval(waitForBall);
-        ballCountInProgress = false;
-
-        if (ballCount >= 4 && battersQueue.length > 0) {
-          resultDisplay.textContent = 'BALL FOUR';
-          resultDisplay.style.color = 'red';
-          ballFour();
-          resetCount();
-        }
-      }
-    }, 50);
   }
 }
     
@@ -199,8 +195,6 @@ function updateCountDisplay() {
   const batterName = battersQueue.length > 0 ? battersQueue[0].name : "No batter";
   display.textContent = `Balls: ${ballCount} | Strikes: ${strikeCount} | Now batting: ${batterName}`;
 }
-
-updateCountDisplay();
 
 function resetCount() {
   strikeCount = 0;
@@ -232,30 +226,11 @@ function startPitch() {
 }
 
 document.addEventListener('keydown', (e) => {
-  if (e.code === 'Space' && slider.active && !slider.stopped) {
+  if (e.code === 'Space' && !pickoffInProgress && slider.active && !slider.stopped) {
     slider.stopped = true;
     slider.result = evaluatePitch();
-    
-    resultDisplay.textContent = slider.result;
-    resultDisplay.style.color = slider.result === 'STRIKE' ? 'green' : 'red';
-
-    if (slider.result === 'STRIKE') strikeCount++;
-    if (slider.result === 'BALL') {
-      ballCount++;
-    }
-    updateCountDisplay();
 
     let delay = 500;
-
-    if (strikeCount >= 3) {
-      resultDisplay.textContent = 'STRIKEOUT';
-      resultDisplay.style.color = 'green';
-      delay = 1000;
-    } else if (ballCount >= 4) {
-      resultDisplay.textContent = 'BALL FOUR';
-      resultDisplay.style.color = 'red';
-      delay = 1000;
-    }
 
     setTimeout(() => {
       const pitcher = players.find(p => p.name === 'Nadhazovac');
@@ -292,31 +267,19 @@ document.addEventListener('keydown', (e) => {
       animateBall(() => {
         ball.owner = "catcher";
 
-        if (strikeCount < 3 && ballCount < 4) {
-          setTimeout(() => returnBallToPitcher(), 800);
+        if (!endOfAtBat) {
+          setTimeout(() => {
+            if (strikeCount < 3 && ballCount < 4) {
+              returnBallToPitcher();
+            }
+          }, 800);
         }
       }, speedFactor);
 
       const waitForBallDone = setInterval(() => {
         if (!ball.active) {
           clearInterval(waitForBallDone);
-          ballCountInProgress = false;
-
-          if (strikeCount >= 3) {
-            sendPlayerToDugout('right');
-            strikeOut();
-            resetCount();
-          }
-
-          if (ballCount >= 4) {
-            ballFour();
-          }
-
-          // reset counts
-          if (ballCount >= 4) resetCount();
-          if (strikeCount >= 3 && !batterRunningToDugout) {
-            resetCount();
-          }
+          evaluateResult();
         }
       }, 50);
     }, delay);
@@ -337,6 +300,8 @@ function animateBall(onComplete, speed = 0.01) {
   ball.progress += speed;
   if (ball.progress >= 1) {
     ball.active = false;
+    slider.active = false;
+    slider.stopped = false;  
     draw();
     if (typeof onComplete === 'function') onComplete();
     return;
@@ -397,6 +362,103 @@ function returnBallToPitcher() {
     catcher.targetY = catcher.homeY;
     catcher.moving = true;
 
+    slider.active = false;
+    slider.stopped = false;
+
     endAnimation();
   }, returnSpeed);
+}
+
+function evaluateResult() {
+  const contactX = centerX;
+  const contactY = homePlateY;
+
+  if (slider.result === "BALL" && swingActive) {
+    resultDisplay.textContent = "SWING & MISS";
+    resultDisplay.style.color = "red";
+    strikeCount++;
+    updateCountDisplay();
+
+    if (strikeCount >= 3) {
+      endOfAtBat = true;
+      resultDisplay.textContent = "STRIKEOUT!";
+      strikeOut();
+      resetCount();
+    }
+
+    swingActive = false;
+    swingAnimation.active = false;
+    ball.active = false;
+    return;
+  }
+
+  if (swingActive) {
+    const distX = Math.abs(ball.x - contactX);
+    const distY = Math.abs(ball.y - contactY);
+
+    if (distX < 35 && distY < 25) {
+      resultDisplay.textContent = "HIT!";
+      resultDisplay.style.color = "blue";
+
+      if (battersQueue.length > 0) {
+        const batter = nextBatter();
+        const newRunner = { name: batter.name, img: bezecImg };
+        animateRunnerToFirstBase(newRunner);
+      }
+      const newBatter = battersQueue[0];
+      if (newBatter) sendBatterFromOnDeck(newBatter, 'right');
+
+      resetCount();
+      swingActive = false;
+      swingAnimation.active = false;
+      ball.active = false;
+      return;
+    }   
+    
+    if (swingActive && !swingAnimation.active && ball.y >= contactY) {
+      resultDisplay.textContent = "SWING & MISS";
+      resultDisplay.style.color = "red";
+      strikeCount++;
+      updateCountDisplay();
+
+      if (strikeCount >= 3) {
+        endOfAtBat = true;
+        resultDisplay.textContent = "STRIKEOUT!";
+        strikeOut();
+        resetCount();
+      }
+      swingActive = false;
+      ball.active = false;
+      return;
+    }
+  } 
+
+  if (!swingActive && ball.y >= contactY) {
+    if (slider.result === "STRIKE") {
+      resultDisplay.textContent = "STRIKE";
+      resultDisplay.style.color = "green";
+      strikeCount++;
+      updateCountDisplay();
+
+      if (strikeCount >= 3) {
+        endOfAtBat = true;
+        resultDisplay.textContent = "STRIKEOUT!";
+        strikeOut();
+        resetCount();
+      }
+    } else {
+      resultDisplay.textContent = "BALL";
+      resultDisplay.style.color = "red";
+      ballCount++;
+      updateCountDisplay();
+
+      if (ballCount >= 4) {
+        endOfAtBat = true;
+        resultDisplay.textContent = "BALL FOUR";
+        ballFour();
+        resetCount();
+      }
+    }
+    ball.active = false;
+  }
 }

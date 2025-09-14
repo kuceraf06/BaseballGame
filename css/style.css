@@ -17,6 +17,11 @@ canvas {
   border: 3px solid #333;
 }
 
+.gameContainer {
+  position:relative;
+  display:inline-block;
+}
+
 button {
   margin-top: 20px;
   padding: 10px 20px;
@@ -60,6 +65,10 @@ button {
 
 #pitchTypeContainer {
   display: flex;
+  position:absolute;
+  top:200px;
+  left:380px;
+  z-index:10;
   gap: 5px;
 }
 
@@ -78,4 +87,26 @@ button {
 .pitchTypeBtn.activePitch {
   background-color: #005299;
   color: white;
+}
+
+.display {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.state {
+  margin-top: 6px;
+}
+
+.stateIndicator {
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:6px;
+  font-weight:bold;
+  color:white;
+}
+
+.stateBtn {
+  margin-left: 10px;
 }

@@ -53,33 +53,40 @@ pickoffBtn3B.addEventListener("click", () => {
 
 throwButton.addEventListener('click', () => {
   if (animationInProgress) return; 
-
   throwButton.blur();
 
-  if (pickoffAttempt1B) {
-    startAnimation();
-    startPickoff1B(() => endAnimation());
-    pickoffAttempt1B = false;
-    pickoffBtn1B.classList.remove("active-pickoff");
+  if (gameState === 'defense') {
+    if (pickoffAttempt1B) {
+      startAnimation();
+      startPickoff1B(() => endAnimation());
+      pickoffAttempt1B = false;
+      pickoffBtn1B.classList.remove("active-pickoff");
 
-  } else if (pickoffAttempt2B) {
-    startAnimation();
-    startPickoff2B(() => endAnimation());
-    pickoffAttempt2B = false;
-    pickoffBtn2B.classList.remove("active-pickoff");
+    } else if (pickoffAttempt2B) {
+      startAnimation();
+      startPickoff2B(() => endAnimation());
+      pickoffAttempt2B = false;
+      pickoffBtn2B.classList.remove("active-pickoff");
 
-  } else if (pickoffAttempt3B) {
-    startAnimation();
-    startPickoff3B(() => endAnimation());
-    pickoffAttempt3B = false;
-    pickoffBtn3B.classList.remove("active-pickoff");
+    } else if (pickoffAttempt3B) {
+      startAnimation();
+      startPickoff3B(() => endAnimation());
+      pickoffAttempt3B = false;
+      pickoffBtn3B.classList.remove("active-pickoff");
 
-  } else {
-    startPitch();
+    } else {
+      startPitch();
+    }
+  } 
+  else if (gameState === 'offense') {
+    resultDisplay.textContent = "Pitcher is preparing...";
+    resultDisplay.style.color = "black";
+    setTimeout(aiPitch, 600 + Math.random() * 750);
   }
 });
 
 function startPickoff1B() {
+  pickoffInProgress = true; 
   startAnimation();
 
   const pitcher = players.find(p => p.name === "Nadhazovac");
@@ -112,11 +119,13 @@ function startPickoff1B() {
     setTimeout(() => {
       returnBallToPitcher();
       endAnimation();
+      pickoffInProgress = false;
     }, 500);
   });
 }
 
 function startPickoff2B() {
+  pickoffInProgress = true; 
   startAnimation();
 
   const pitcher = players.find(p => p.name === "Nadhazovac");
@@ -166,6 +175,7 @@ function startPickoff2B() {
     setTimeout(() => {
       returnBallToPitcher();
       endAnimation();
+      pickoffInProgress = false;
     }, 500);
 
     draw();
@@ -173,6 +183,7 @@ function startPickoff2B() {
 }
 
 function startPickoff3B() {
+  pickoffInProgress = true; 
   startAnimation();
 
   const pitcher = players.find(p => p.name === "Nadhazovac");
@@ -221,6 +232,7 @@ function startPickoff3B() {
     setTimeout(() => {
       returnBallToPitcher();
       endAnimation();
+      pickoffInProgress = false;
     }, 500);
 
     draw();

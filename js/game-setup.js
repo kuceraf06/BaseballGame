@@ -43,6 +43,7 @@ let animationInProgress = false;
 function startAnimation() {
   animationInProgress = true;
   throwButton.disabled = true;
+  pitchTypeContainer.style.display = 'none';
   hidePickoffButtons();
   throwButton.classList.add("disabled");
 }
@@ -50,9 +51,15 @@ function startAnimation() {
 function endAnimation() {
   animationInProgress = false;
   throwButton.disabled = false;
-  showPickoffButtons();
-  pitchTypeContainer.style.display = 'flex';
   throwButton.classList.remove("disabled");
+
+  if (gameState === 'defense') {
+    showPickoffButtons();
+    pitchTypeContainer.style.display = 'flex';
+  } else {
+    hidePickoffButtons();
+    pitchTypeContainer.style.display = 'none';
+  }
 }
 
 function nextBatter() {

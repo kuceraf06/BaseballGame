@@ -1,3 +1,5 @@
+let lastTime = performance.now();
+
 function sendPlayerToDugout(side = 'left', player = null, onArrive = null) {
   startAnimation();
   const home = { x: centerX, y: homePlateY };
@@ -19,7 +21,7 @@ function sendPlayerToDugout(side = 'left', player = null, onArrive = null) {
     y: home.y,
     targetX,
     targetY,
-    speed: 0.26,
+    speed: 0.8,
     color: side === 'left' ? '#1565c0' : '#c62828',
     player: player ? { name: player.name, img: player.img || palkarImg } : null,
     onArrive: (runner) => {
@@ -29,21 +31,24 @@ function sendPlayerToDugout(side = 'left', player = null, onArrive = null) {
   });
 }
 
-function updateDugoutRunners() {
+function updateDugoutRunners(currentTime = performance.now()) {
+  const deltaTime = (currentTime - lastTime) / 16.67; 
+  lastTime = currentTime;
+
   for (let i = dugoutRunners.length - 1; i >= 0; i--) {
     const runner = dugoutRunners[i];
     const dx = runner.targetX - runner.x;
     const dy = runner.targetY - runner.y;
     const dist = Math.sqrt(dx * dx + dy * dy);
 
-    if (dist < runner.speed) {
+    if (dist < runner.speed * deltaTime) {
       if (runner.onArrive) {
         try { runner.onArrive(runner); } catch (e) {}
       }
       dugoutRunners.splice(i, 1);
     } else {
-      runner.x += (dx / dist) * runner.speed;
-      runner.y += (dy / dist) * runner.speed;
+      runner.x += (dx / dist) * runner.speed * deltaTime;
+      runner.y += (dy / dist) * runner.speed * deltaTime;
     }
   }
 }
@@ -99,7 +104,7 @@ function sendBatterFromOnDeck(newBatter, side = 'right', onArrive = null) {
     y: onDeck.y,
     targetX: home.x,
     targetY: home.y,
-    speed: 0.20,
+    speed: 0.6,
     color: side === 'left' ? '#1565c0' : '#c62828',
     player: { name: newBatter.name, img: batterDugoutImg || palkarImg },
     onArrive: () => {
@@ -140,7 +145,7 @@ function sendBatterFromDugoutToOnDeck(newBatter, side = 'right', onArrive = null
     y: dugoutY,
     targetX: onDeck.x,
     targetY: onDeck.y,
-    speed: 0.072,
+    speed: 0.22,
     color: side === 'left' ? '#1565c0' : '#c62828',
     player: { 
       name: newBatter.name, 
@@ -155,3 +160,12 @@ function sendBatterFromDugoutToOnDeck(newBatter, side = 'right', onArrive = null
     }
   });
 }
+
+function animate(currentTime = performance.now()) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  updateDugoutRunners(currentTime);
+  drawDugoutRunners();
+  requestAnimationFrame(animate);
+}
+
+requestAnimationFrame(animate);

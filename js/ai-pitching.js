@@ -52,13 +52,13 @@ function aiPitch() {
 
   animateBall(() => {
     ball.owner = "catcher";
-    if (!endOfAtBat) {
-      setTimeout(() => {
-        if (strikeCount < 3 && ballCount < 4) {
-          returnBallToPitcher();
-        }
-      }, 800);
-    }
+    lastPitch = chosenPitch;
+    setTimeout(() => {
+      if (!preventReturnToPitcher) {
+        returnBallToPitcher();
+      }
+      preventReturnToPitcher = false;
+    }, 800);
   }, speedFactor);
   const waitForBallDone = setInterval(() => {
     if (!ball.active) {
@@ -70,8 +70,6 @@ function aiPitch() {
 
 throwButtonEl.addEventListener('click', () => {
   if (gameState === 'offense' && !animationInProgress) {
-    resultDisplay.textContent = "Pitcher is preparing...";
-    resultDisplay.style.color = "black";
     setTimeout(aiPitch, 600 + Math.random() * 750);
   }
 });

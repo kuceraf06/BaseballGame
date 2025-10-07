@@ -4,17 +4,32 @@ function updatePitchTypeButtonsPosition() {
   const pitcher = players.find(p => p.name === 'Nadhazovac');
   if (!pitcher) return;
   
-  pitchTypeContainer.style.left = (pitcher.x + playerSize/2 - pitchTypeContainer.offsetWidth / 2) + 'px';
+  pitchTypeContainer.style.left = (pitcher.x + playerSize/2 - pitchTypeContainer.offsetWidth / 2 - 5) + 'px';
   pitchTypeContainer.style.top = (pitcher.y - 60) + 'px';
 }
 
 function strikeOut() {
-  endOfAtBat = true;
+  if (strikeoutInProgress) return;
+  strikeoutInProgress = true;
+
+  atBatOver = true;
+
+  hitRegistered = false;
+  swingActive = false;
+
+  const pitcher = players.find(p => p.name === "Nadhazovac");
+  ball.x = ball.startX = pitcher.x + playerSize/2;
+  ball.y = ball.startY = pitcher.y + playerSize/2;
+  ball.endX = ball.x;
+  ball.endY = ball.y;
+  ball.progress = 0;
+  ball.active = false;
+  ball.inPlay = false;
 
   if (battersQueue.length > 0) {
     const batterOut = nextBatter();
-
     startBatterToDugout(batterOut, 'right');
+
     hideBatterDuringOnDeckAnimation = true;
 
     const newBatter = battersQueue[0];
@@ -28,23 +43,52 @@ function strikeOut() {
       sendBatterFromOnDeck(newBatter, 'right', () => {
         hideBatterDuringOnDeckAnimation = false;
         resetCount();
-        endOfAtBat = false;
+        strikeoutInProgress = false;
+
+        const catcher = players.find(p => p.name === 'Catcher');
+        catcher.targetX = catcher.homeX;
+        catcher.targetY = catcher.homeY;
+        catcher.moving = true;
       });
     } else {
       hideBatterDuringOnDeckAnimation = false;
       resetCount();
-      endOfAtBat = false;
+      strikeoutInProgress = false;
+
+      const catcher = players.find(p => p.name === 'Catcher');
+      catcher.targetX = catcher.homeX;
+      catcher.targetY = catcher.homeY;
+      catcher.moving = true;
     }
   }
+
   addOut();
+
+  if (typeof resetSwingState === 'function') resetSwingState();
+
+  ball.active = false;
+  ball.inPlay = false;
+  ball.owner = "pitcher";
+  preventReturnToPitcher = false;
+
   draw();
 }
 
 function ballFour() {
-  endOfAtBat = true;
+  lastPlayType = "BALLFOUR";
+  atBatOver = true;
+
+  const pitcher = players.find(p => p.name === "Nadhazovac");
+  ball.x = ball.startX = pitcher.x + playerSize/2;
+  ball.y = ball.startY = pitcher.y + playerSize/2;
+  ball.endX = ball.x;
+  ball.endY = ball.y;
+  ball.progress = 0;
+  ball.active = false;
+  ball.inPlay = false;
 
   if (battersQueue.length > 0) {
-    const batterOut = nextBatter(); 
+    const batterOut = nextBatter();
     const newRunner = { name: batterOut.name, img: bezecImg };
 
     animateRunnerToFirstBase(newRunner);
@@ -59,19 +103,20 @@ function ballFour() {
     if (newBatter) {
       sendBatterFromOnDeck(newBatter, 'right', () => {
         resetCount();
-        endOfAtBat = false;
         draw();
       });
     } else {
       resetCount();
-      endOfAtBat = false;
       draw();
     }
   }
+
   const catcher = players.find(p => p.name === 'Catcher');
   catcher.targetX = catcher.homeX;
   catcher.targetY = catcher.homeY;
   catcher.moving = true;
+
+  if (typeof resetSwingState === 'function') resetSwingState();
 
   draw();
 }
@@ -86,17 +131,18 @@ const ball = {
   endY: 0,
   progress: 0,
   owner: "pitcher",
-  isSliderFlight: false 
+  isSliderFlight: false,
+  size: 8,
 };
 
 const slider = {
   active: false,
-  x: canvas.width / 2 - 150,
-  y: 20,
-  width: 300,
-  height: 20,
+  x: canvas.width / 2 - 165,
+  y: 121,
+  width: 350,
+  height: 25,
   handleX: canvas.width / 2 - 150,
-  speed: 2,
+  speed: 3,
   stopped: false,
   result: null
 };
@@ -105,10 +151,10 @@ function drawSlider() {
   if (!slider.active) return;
 
   const total = slider.width;
-  const gray1 = total * 0.5;
-  const blue = total * 0.3;
-  const green = total * 0.15;
-  const gray2 = total * 0.05;
+  const gray1 = total * 0.525;
+  const blue = total * 0.325;
+  const green = total * 0.1;
+  const gray2 = total * 0.06;
 
   let offset = slider.x;
   ctx.fillStyle = 'gray';
@@ -130,17 +176,23 @@ function drawSlider() {
   ctx.fillRect(slider.handleX - 2, slider.y, 4, slider.height);
 }
 
-function updateSlider() {
-  if (!slider.active || slider.stopped) return;
-  slider.handleX += slider.speed;
+let lastSliderTime = null;
+
+function updateSlider(now = performance.now()) {
+  if (!slider.active || slider.stopped) {
+    lastSliderTime = null; 
+    return;
+  }
+
+  if (!lastSliderTime) lastSliderTime = now;
+  const delta = now - lastSliderTime;
+  lastSliderTime = now;
+
+  const speedPerMs = 0.4;
+  slider.handleX += speedPerMs * delta;
 
   if (slider.handleX > slider.x + slider.width) {
     slider.stopped = true;
-    slider.result = 'BALL';
-    resultDisplay.textContent = slider.result;
-    resultDisplay.style.color = 'red';
-    ballCount++;
-    updateCountDisplay();
 
     const pitcher = players.find(p => p.name === 'Nadhazovac');
     const catcher = players.find(p => p.name === 'Catcher');
@@ -154,21 +206,45 @@ function updateSlider() {
     ball.progress = 0;
     ball.active = true;
 
+    aiOnPitchStart();
+
     catcher.targetX = ball.endX - playerSize / 2;
     catcher.targetY = ball.endY - playerSize / 2;
     catcher.moving = true;
-    
+
     draw();
+    ball.isSliderFlight = (selectedPitch === 'SL');
+
+    let speedFactor;
+    switch (selectedPitch) {
+      case 'FB': speedFactor = 0.011; break;
+      case 'CH': speedFactor = 0.005; break;
+      case 'SL': speedFactor = 0.008; break;
+      default: speedFactor = 0.01; break;
+    }
+
     animateBall(() => {
       ball.owner = "catcher";
-        if (!endOfAtBat) {
+      lastPitch = selectedPitch;
+
+      if (ballCount >= 4) {
+        preventReturnToPitcher = true;
+        atBatOver = true;
+
         setTimeout(() => {
-          if (strikeCount < 3 && ballCount < 4) {
-            returnBallToPitcher();
-          }
-        }, 800);
+          ballFour();
+          resetCount();
+        }, 20);
       }
-    });
+
+      setTimeout(() => {
+        if (!preventReturnToPitcher) {
+          returnBallToPitcher();
+        }
+        preventReturnToPitcher = false;
+      }, 800);
+    }, speedFactor);
+
   }
 }
     
@@ -187,22 +263,10 @@ function evaluatePitch() {
   else return 'BALL';
 }
 
-let strikeCount = 0;
-let ballCount = 0;
-
-function updateCountDisplay() {
-  const display = document.getElementById('countDisplay');
-  const batterName = battersQueue.length > 0 ? battersQueue[0].name : "No batter";
-  display.textContent = `Balls: ${ballCount} | Strikes: ${strikeCount} | Now batting: ${batterName}`;
-}
-
 function resetCount() {
   strikeCount = 0;
   ballCount = 0;
-  updateCountDisplay();
 }
-
-let selectedPitch = 'FB';
 
 document.querySelectorAll('.pitchTypeBtn').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -212,23 +276,34 @@ document.querySelectorAll('.pitchTypeBtn').forEach(btn => {
   });
 });
 
+function resetSwingState() {
+  hitRegistered = false;
+  swingActive = false;
+  swingAllowed = false;
+}
+
 function startPitch() {
-  if (animationInProgress) return;
+  if (animationInProgress || gameState !== 'defense' || slider.active) return;
 
   slider.active = true;
   slider.stopped = false;
   slider.result = null;
   slider.handleX = slider.x;
 
-  resultDisplay.textContent = '';
+  if (typeof resetSwingState === 'function') resetSwingState();
 
   draw();
 }
 
 document.addEventListener('keydown', (e) => {
-  if (e.code === 'Space' && !pickoffInProgress && slider.active && !slider.stopped) {
+  if (e.code === 'Space' && gameState === 'defense' && !pickoffInProgress && slider.active && !slider.stopped) {
     slider.stopped = true;
     slider.result = evaluatePitch();
+
+    swingActive = true;
+    swingAllowed = false;
+
+    hitRegistered = false;
 
     let delay = 500;
 
@@ -249,6 +324,8 @@ document.addEventListener('keydown', (e) => {
       ball.progress = 0;
       ball.active = true;
 
+      aiOnPitchStart();
+
       pitchTypeContainer.style.display = 'none';
       hidePickoffButtons();
 
@@ -266,42 +343,63 @@ document.addEventListener('keydown', (e) => {
 
       animateBall(() => {
         ball.owner = "catcher";
+        lastPitch = selectedPitch;
+        setTimeout(() => {
+          if (!preventReturnToPitcher) {
+            returnBallToPitcher();
+          }
+          preventReturnToPitcher = false;
+        }, 800);
+    }, speedFactor);
 
-        if (!endOfAtBat) {
-          setTimeout(() => {
-            if (strikeCount < 3 && ballCount < 4) {
-              returnBallToPitcher();
-            }
-          }, 800);
-        }
-      }, speedFactor);
+const waitForBallDone = setInterval(() => {
+  if (!ball.active) {
+    clearInterval(waitForBallDone);
 
-      const waitForBallDone = setInterval(() => {
-        if (!ball.active) {
-          clearInterval(waitForBallDone);
-          evaluateResult();
-        }
-      }, 50);
+    if (typeof aiBattingEnabled !== "undefined" && aiBattingEnabled) {
+      return;
+    }
+
+    evaluateResult();
+  }
+}, 50);
+
     }, delay);
   }
 });
 
 function drawBall() {
-  if (ball.active && ballImg.complete) {
-    ctx.drawImage(ballImg, ball.x - 5, ball.y - 5, 7.5, 7.5);
+  if ((ball.active || ball.inPlay) && ballImg.complete) {
+    const z = ball.z || 0;
+    const half = ball.size / 2;
+    ctx.drawImage(ballImg, ball.x - half, (ball.y - z) - half, ball.size, ball.size);
   }
 }
 
-function animateBall(onComplete, speed = 0.01) {
+function animateBall(onComplete, speed = 0.01, lastTime = null) {
   if (!ball.active) return;
 
   startAnimation();
+  
+  const now = performance.now();
+  if (!lastTime) lastTime = now;
+  const delta = now - lastTime;
 
-  ball.progress += speed;
+  ball.progress += speed * delta * (180 / 1000);
   if (ball.progress >= 1) {
     ball.active = false;
     slider.active = false;
-    slider.stopped = false;  
+    slider.stopped = false;
+
+    ball.x = ball.endX;
+    ball.y = ball.endY;
+
+    if ((gameState === 'offense' || aiBattingEnabled) && hitRegistered) {
+      ball.inPlay = true;
+    } else {
+      ball.inPlay = false;
+    }
+
     draw();
     if (typeof onComplete === 'function') onComplete();
     return;
@@ -316,8 +414,31 @@ function animateBall(onComplete, speed = 0.01) {
     ball.x += slideOffset;
   }
 
+  if (!swingAllowed && hitZone) {
+    if (ball.y >= hitZone.y) swingAllowed = true;
+  }
+
+  if ((gameState === 'offense' || aiBattingEnabled) &&
+    swingActive && swingAllowed && hitZone && !hitRegistered) {
+
+    const ballInZone = (
+      ball.x >= hitZone.x &&
+      ball.x <= hitZone.x + hitZone.width &&
+      ball.y >= hitZone.y &&
+      ball.y <= hitZone.y + hitZone.height
+    );
+
+    if (ballInZone || !hitRegistered) {
+      hitRegistered = true;
+      evaluateResult(ballInZone);
+    }
+  }
+  else if (gameState === 'defense' && !aiBattingEnabled) {
+    if (!ball.active) evaluateResult();
+  }
+  
   draw();
-  requestAnimationFrame(() => animateBall(onComplete, speed));
+  requestAnimationFrame(() => animateBall(onComplete, speed, now));
 }
 
 function returnBallToPitcher() {
@@ -365,100 +486,9 @@ function returnBallToPitcher() {
     slider.active = false;
     slider.stopped = false;
 
+    if (typeof resetSwingState === 'function') resetSwingState();
+
     endAnimation();
   }, returnSpeed);
 }
 
-function evaluateResult() {
-  const contactX = centerX;
-  const contactY = homePlateY;
-
-  if (slider.result === "BALL" && swingActive) {
-    resultDisplay.textContent = "SWING & MISS";
-    resultDisplay.style.color = "red";
-    strikeCount++;
-    updateCountDisplay();
-
-    if (strikeCount >= 3) {
-      endOfAtBat = true;
-      resultDisplay.textContent = "STRIKEOUT!";
-      strikeOut();
-      resetCount();
-    }
-
-    swingActive = false;
-    swingAnimation.active = false;
-    ball.active = false;
-    return;
-  }
-
-  if (swingActive) {
-    const distX = Math.abs(ball.x - contactX);
-    const distY = Math.abs(ball.y - contactY);
-
-    if (distX < 35 && distY < 25) {
-      resultDisplay.textContent = "HIT!";
-      resultDisplay.style.color = "blue";
-
-      if (battersQueue.length > 0) {
-        const batter = nextBatter();
-        const newRunner = { name: batter.name, img: bezecImg };
-        animateRunnerToFirstBase(newRunner);
-      }
-      const newBatter = battersQueue[0];
-      if (newBatter) sendBatterFromOnDeck(newBatter, 'right');
-
-      resetCount();
-      swingActive = false;
-      swingAnimation.active = false;
-      ball.active = false;
-      return;
-    }   
-    
-    if (swingActive && !swingAnimation.active && ball.y >= contactY) {
-      resultDisplay.textContent = "SWING & MISS";
-      resultDisplay.style.color = "red";
-      strikeCount++;
-      updateCountDisplay();
-
-      if (strikeCount >= 3) {
-        endOfAtBat = true;
-        resultDisplay.textContent = "STRIKEOUT!";
-        strikeOut();
-        resetCount();
-      }
-      swingActive = false;
-      ball.active = false;
-      return;
-    }
-  } 
-
-  if (!swingActive && ball.y >= contactY) {
-    if (slider.result === "STRIKE") {
-      resultDisplay.textContent = "STRIKE";
-      resultDisplay.style.color = "green";
-      strikeCount++;
-      updateCountDisplay();
-
-      if (strikeCount >= 3) {
-        endOfAtBat = true;
-        resultDisplay.textContent = "STRIKEOUT!";
-        strikeOut();
-        resetCount();
-      }
-    } else {
-      resultDisplay.textContent = "BALL";
-      resultDisplay.style.color = "red";
-      ballCount++;
-      updateCountDisplay();
-
-      if (ballCount >= 4) {
-        endOfAtBat = true;
-        resultDisplay.textContent = "BALL FOUR";
-        ballFour();
-        resetCount();
-      }
-    }
-    ball.active = false;
-  }
-}

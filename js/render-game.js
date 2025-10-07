@@ -3,15 +3,17 @@ function draw() {
   drawField();
   drawBall();
   drawSlider();
+  drawResultText(); 
+  drawScoreboard(ctx);
 
   if (!runnersInMotion) {
-    if (runnerOnFirstBase) drawRun(runnerOnFirstBase, POS.FIRST);
-    if (runnerOnSecondBase) drawRun(runnerOnSecondBase, POS.SECOND);
-    if (runnerOnThirdBase) drawRun(runnerOnThirdBase, POS.THIRD);
+    if (bases[0]) drawRun(bases[0], POS.FIRST);
+    if (bases[1]) drawRun(bases[1], POS.SECOND);
+    if (bases[2]) drawRun(bases[2], POS.THIRD);
   }
 
   const pickoffBtn1B = document.getElementById("pickoffButton");
-  if (runnerOnFirstBase) {
+  if (bases[0]) {
     pickoffBtn1B.style.display = "inline-block";
     pickoffBtn1B.style.left = (POS.FIRST.x - 20) + "px";
     pickoffBtn1B.style.top  = (POS.FIRST.y + 5) + "px";
@@ -20,7 +22,7 @@ function draw() {
   }
 
   const pickoffBtn2B = document.getElementById("pickoffButton2B");
-  if (runnerOnSecondBase) {
+  if (bases[1]) {
     pickoffBtn2B.style.display = "inline-block";
     pickoffBtn2B.style.left = (POS.SECOND.x) + "px";
     pickoffBtn2B.style.top  = (POS.SECOND.y + 10) + "px";
@@ -29,7 +31,7 @@ function draw() {
   }
 
   const pickoffBtn3B = document.getElementById("pickoffButton3B");
-  if (runnerOnThirdBase) {
+  if (bases[2]) {
     pickoffBtn3B.style.display = "inline-block";
     pickoffBtn3B.style.left = (POS.THIRD.x) + "px";
     pickoffBtn3B.style.top  = (POS.THIRD.y + 10) + "px";
@@ -47,7 +49,7 @@ function draw() {
     let drawX = p.x;
     let drawY = p.y;
 
-    if (p.name === 'Polar_FirstBase' && runnerOnFirstBase) {
+    if (p.name === 'Polar_FirstBase' && bases[0]) {
       drawX = POS.FIRST.x - 15; 
       drawY = POS.FIRST.y - 5; 
     }
@@ -101,6 +103,7 @@ function draw() {
   });
 
   drawBatters();
+  drawController(ctx, canvas);
 }
 
 let loadedCount = 0;

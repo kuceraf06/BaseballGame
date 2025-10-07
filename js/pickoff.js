@@ -79,8 +79,6 @@ throwButton.addEventListener('click', () => {
     }
   } 
   else if (gameState === 'offense') {
-    resultDisplay.textContent = "Pitcher is preparing...";
-    resultDisplay.style.color = "black";
     setTimeout(aiPitch, 600 + Math.random() * 750);
   }
 });
@@ -106,13 +104,12 @@ function startPickoff1B() {
 
   draw();
 
-  if (runnerOnFirstBase) {
-    moveRunnerBackToBaseAndLead(runnerOnFirstBase, POS.FIRST);
+  if (bases[0]) {
+    moveRunnerBackToBaseAndLead(bases[0], POS.FIRST);
   }
 
   animateBall(() => {
-    resultDisplay.textContent = "SAFE!";
-    resultDisplay.style.color = "green";
+    showResultText("SAFE!", "green");
     ball.owner = "firstBase";
     draw();
 
@@ -152,8 +149,8 @@ function startPickoff2B() {
 
   draw();
 
-  if (runnerOnSecondBase) {
-    moveRunnerBackToBaseAndLead(runnerOnSecondBase, POS.SECOND);
+  if (bases[1]) {
+    moveRunnerBackToBaseAndLead(bases[1], POS.SECOND);
   }
 
   if (polar) {
@@ -162,8 +159,7 @@ function startPickoff2B() {
   }
 
   animateBall(() => {
-    resultDisplay.textContent = "SAFE!";
-    resultDisplay.style.color = "green";
+   showResultText("SAFE!", "green");
     ball.owner = "polar";
 
     if (polar) {
@@ -210,8 +206,8 @@ function startPickoff3B() {
 
   draw();
 
-  if (runnerOnThirdBase) {
-    moveRunnerBackToBaseAndLead(runnerOnThirdBase, POS.THIRD);
+  if (bases[2]) {
+    moveRunnerBackToBaseAndLead(bases[2], POS.THIRD);
   }
 
   if (polar) {
@@ -220,8 +216,7 @@ function startPickoff3B() {
   }
 
   animateBall(() => {
-    resultDisplay.textContent = "SAFE!";
-    resultDisplay.style.color = "green";
+    showResultText("SAFE!", "green");
 
     if (polar) {
       setTimeout(() => {
@@ -305,7 +300,59 @@ function animatePolarBack(polar) {
   requestAnimationFrame(animate);
 }
 
-function moveRunnerBackToBaseAndLead(runner, basePos) {
+function drawRun(runner, pos) {
+  const LEAD_OFFSET = 25;
+
+  let centerX = (runner.x !== undefined) ? runner.x : pos.x + playerSize / 2;
+  let centerY = (runner.y !== undefined) ? runner.y : pos.y + playerSize / 2;
+
+  if (runner.x === undefined && pos === POS.FIRST) {
+    centerX -= LEAD_OFFSET;
+    centerY -= LEAD_OFFSET;
+  }
+  if (runner.x === undefined && pos === POS.SECOND) {
+    centerX -= LEAD_OFFSET;
+    centerY += LEAD_OFFSET;
+  }
+  if (runner.x === undefined && pos === POS.THIRD) {
+    centerX += LEAD_OFFSET;
+    centerY += LEAD_OFFSET;
+  }
+
+  let angle = 0;
+  if (runner.state === "sliding") {
+    const dx = pos.x + playerSize / 2 - centerX;
+    const dy = pos.y + playerSize / 2 - centerY;
+    angle = Math.atan2(dy, dx);
+  } else if (runner.state === "returning") {
+    if (pos === POS.FIRST) angle = -Math.PI / 4;
+    else if (pos === POS.SECOND) angle = Math.PI / 4;
+    else if (pos === POS.THIRD) angle = (3 * Math.PI) / 4;
+  } else {
+    angle = 0;
+  }
+
+  let imgToDraw = bezecImg;
+  if (runner.state === "sliding") imgToDraw = slideImg;
+  else if (runner.state === "returning") imgToDraw = bezecImg;
+
+  ctx.save();
+  ctx.translate(centerX, centerY);
+  ctx.rotate(angle);
+  ctx.drawImage(imgToDraw, -playerSize / 2, -playerSize / 2, playerSize, playerSize);
+  ctx.restore();
+
+  if (!runScoredText && runner.name) {
+    ctx.font = "12px Arial";
+    ctx.fillStyle = "black";
+    ctx.textAlign = "center";
+    ctx.fillText(runner.name, centerX, centerY - playerSize / 2 - 5);
+  }
+
+  drawRunScored();
+}
+
+function moveRunnerBackToBaseAndLead(runner, basePos, onComplete) {
   if (!runner) return;
 
   const BASE = basePos;
@@ -315,22 +362,14 @@ function moveRunnerBackToBaseAndLead(runner, basePos) {
   const baseCenterX = BASE.x + playerSize / 2;
   const baseCenterY = BASE.y + playerSize / 2;
 
-  let defaultLeadX = baseCenterX;
-  let defaultLeadY = baseCenterY;
+  let leadX = baseCenterX;
+  let leadY = baseCenterY;
+  if (BASE === POS.FIRST) { leadX -= LEAD_OFFSET; leadY -= LEAD_OFFSET; }
+  else if (BASE === POS.SECOND) { leadX -= LEAD_OFFSET; leadY += LEAD_OFFSET; }
+  else if (BASE === POS.THIRD) { leadX += LEAD_OFFSET; leadY += LEAD_OFFSET; }
 
-  if (BASE === POS.FIRST) {
-    defaultLeadX -= LEAD_OFFSET;
-    defaultLeadY -= LEAD_OFFSET;
-  } else if (BASE === POS.SECOND) {
-    defaultLeadX -= LEAD_OFFSET;
-    defaultLeadY += LEAD_OFFSET;
-  } else if (BASE === POS.THIRD) {
-    defaultLeadX += LEAD_OFFSET;
-    defaultLeadY += LEAD_OFFSET;
-  }
-
-  const leadX = (runner.x !== undefined) ? runner.x : defaultLeadX;
-  const leadY = (runner.y !== undefined) ? runner.y : defaultLeadY;
+  const startX = (runner.x !== undefined) ? runner.x : leadX;
+  const startY = (runner.y !== undefined) ? runner.y : leadY;
 
   runner.state = "sliding";
 
@@ -339,8 +378,8 @@ function moveRunnerBackToBaseAndLead(runner, basePos) {
     const elapsed = time - startTime;
     const progress = Math.min(elapsed / duration, 1);
 
-    runner.x = leadX + (baseCenterX - leadX) * progress;
-    runner.y = leadY + (baseCenterY - leadY) * progress;
+    runner.x = startX + (baseCenterX - startX) * progress;
+    runner.y = startY + (baseCenterY - startY) * progress;
 
     draw();
 
@@ -349,18 +388,16 @@ function moveRunnerBackToBaseAndLead(runner, basePos) {
     } else {
       runner.x = baseCenterX;
       runner.y = baseCenterY;
-      resultDisplay.textContent = "SAFE!";
-      resultDisplay.style.color = "green";
-      draw();
+      showResultText("SAFE!", "green");
 
       setTimeout(() => {
         runner.state = "returning";
-        animateBackToLead(runner, defaultLeadX, defaultLeadY);
+        animateBackToLead(runner, leadX, leadY, onComplete);
       }, 500);
     }
   }
 
-  function animateBackToLead(runner, targetX, targetY) {
+  function animateBackToLead(runner, targetX, targetY, callback) {
     const startX = runner.x;
     const startY = runner.y;
     const startTime = performance.now();
@@ -381,7 +418,7 @@ function moveRunnerBackToBaseAndLead(runner, basePos) {
         runner.y = undefined;
         runner.state = "lead";
         draw();
-        if (onComplete) onComplete();
+        if (typeof callback === "function") callback();
       }
     }
 

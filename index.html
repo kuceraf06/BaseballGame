@@ -7,9 +7,11 @@
 </head>
 <body>
 
+  <!--<img src="images/logo.png" alt="logo">!-->
+
   <div id="gameContainer" class="gameContainer">
 
-    <canvas id="field" width="800" height="600"></canvas>
+    <canvas id="field" width="1300" height="750"></canvas>
 
     <div class="pickoffButtons">
       <button id="pickoffButton" class="pickoffBtn" tabindex="-1">1B</button>
@@ -28,29 +30,26 @@
   <br />
 
   <button class="throwButton" id="throwButton" tabindex="-1">Ready</button><br />
-  <div id="result"></div>
-  <div id="countDisplay" class="display"></div>
 
-  <div id="outsDisplay" class="display">Outs: 0</div>
-
-  <div class="state">
-    <span id="stateIndicator" class="stateIndicator">
-      DEFENSE — You pitch
-    </span>
+  <div id="controls" class="controls">
+    <button id="toggleHitZoneBtn" class="stateBtn">Toggle Strike Zone</button>
     <button id="toggleStateBtn" class="stateBtn">Toggle Off/Def</button>
   </div>
 
   <script src="js/game-setup.js"></script>
   <script src="js/game-state.js"></script>
+  <script src="js/scoreboard.js"></script>
+  <script src="js/controller.js"></script>
+  <script src="js/field.js"></script>
   <script src="js/pitching.js"></script>
   <script src="js/pickoff.js"></script>
   <script src="js/ai-pitching.js"></script>
   <script src="js/game-loop.js"></script>
   <script src="js/runners.js"></script>
   <script src="js/dugout.js"></script>
-  <script src="js/field.js"></script>
   <script src="js/drag-and-drop.js"></script>
   <script src="js/batters.js"></script>
+  <script src="js/ai-batting.js"></script>
   <script src="js/render-game.js"></script>
 
 </body>

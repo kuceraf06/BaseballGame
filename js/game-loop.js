@@ -1,5 +1,5 @@
-function gameLoop() {
-  updateSlider();
+function gameLoop(now) {
+  updateSlider(now);
   updateDugoutRunners();
   updatePitchTypeButtonsPosition();
   draw();

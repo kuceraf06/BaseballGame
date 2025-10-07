@@ -1,12 +1,11 @@
 const canvas = document.getElementById('field');
 const ctx = canvas.getContext('2d');
-const resultDisplay = document.getElementById('result');
 const throwButton = document.getElementById('throwButton');
 
 const centerX = canvas.width / 2;
 const homePlateY = canvas.height - 50;
-const baseDistance = 120;
-const playerSize = 20;
+const baseDistance = 160;
+const playerSize = 25;
 
 const catcherImg = new Image();
 const nadhazovacImg = new Image();
@@ -18,6 +17,7 @@ const batterDugoutImg = new Image();
 const benchPlayerImg = new Image();
 const slideImg = new Image();
 const actionImg = new Image();
+const logoImg = new Image();
 
 catcherImg.src = 'images/catcher.png';
 nadhazovacImg.src = 'images/nadhazovac.png';
@@ -29,13 +29,18 @@ batterDugoutImg.src = 'images/batterDugout.png';
 benchPlayerImg.src = 'images/benchPlayer.png';
 slideImg.src = 'images/slide.png';
 actionImg.src = 'images/akce.png';
+logoImg.src = 'images/logo.png';
 
 let battersQueue = [
   { name: 'Palkar1', img: palkarImg },
   { name: 'Palkar2', img: palkarImg },
   { name: 'Palkar3', img: palkarImg },
   { name: 'Palkar4', img: palkarImg },
-  { name: 'Palkar5', img: palkarImg }
+  { name: 'Palkar5', img: palkarImg },
+  { name: 'Palkar6', img: palkarImg },
+  { name: 'Palkar7', img: palkarImg },
+  { name: 'Palkar8', img: palkarImg },
+  { name: 'Palkar9', img: palkarImg }
 ];
 
 let animationInProgress = false;
@@ -50,37 +55,42 @@ function startAnimation() {
 
 function endAnimation() {
   animationInProgress = false;
-  throwButton.disabled = false;
-  throwButton.classList.remove("disabled");
+  setTimeout(() => {
+    throwButton.disabled = false;
+    throwButton.classList.remove("disabled");
 
-  if (gameState === 'defense') {
-    showPickoffButtons();
-    pitchTypeContainer.style.display = 'flex';
-  } else {
-    hidePickoffButtons();
-    pitchTypeContainer.style.display = 'none';
-  }
+    if (gameState === 'defense') {
+      showPickoffButtons();
+      pitchTypeContainer.style.display = 'flex';
+    } else {
+      hidePickoffButtons();
+      pitchTypeContainer.style.display = 'none';
+    }
+  }, 500);
 }
 
 function nextBatter() {
   const batter = battersQueue.shift();
   battersQueue.push(batter);
+
+  currentOnDeckBatter = batter;
+
   return batter;
 }
 
 const players = [
-  { name: 'Catcher', img: catcherImg, x: centerX - 10, y: homePlateY + 7 },
+  { name: 'Catcher', img: catcherImg, x: centerX - 12, y: homePlateY + 7 },
   { name: 'Nadhazovac', img: nadhazovacImg, x: centerX - 5, y: homePlateY - baseDistance - 5 },
 
-  { name: 'Polar_LeftField', img: polarImg, x: centerX - 170, y: homePlateY - 300 },
-  { name: 'Polar_CenterField', img: polarImg, x: centerX - 20,  y: homePlateY - 350 },
-  { name: 'Polar_RightField', img: polarImg, x: centerX + 130, y: homePlateY - 300 },
+  { name: 'Polar_LeftField', img: polarImg, x: centerX - 230, y: homePlateY - 425 },
+  { name: 'Polar_CenterField', img: polarImg, x: centerX - 20,  y: homePlateY - 500 },
+  { name: 'Polar_RightField', img: polarImg, x: centerX + 190, y: homePlateY - 425 },
 
-  { name: 'Polar_SecondBase', img: polarImg, x: centerX + baseDistance / 4, y: homePlateY - baseDistance - 120},
+  { name: 'Polar_SecondBase', img: polarImg, x: centerX + baseDistance / 3, y: homePlateY - baseDistance - 160},
   { name: 'Polar_ShortStop', img: polarImg, x: centerX - baseDistance / 2, y: homePlateY - baseDistance * 2 },
 
-  { name: 'Polar_ThirdBase', img: polarImg, x: centerX - baseDistance - 0, y: homePlateY - baseDistance - 50 },
-  { name: 'Polar_FirstBase', img: polarImg, x: centerX + baseDistance - 30, y: homePlateY - baseDistance - 50 }
+  { name: 'Polar_ThirdBase', img: polarImg, x: centerX - baseDistance - 0, y: homePlateY - baseDistance - 70 },
+  { name: 'Polar_FirstBase', img: polarImg, x: centerX + baseDistance - 30, y: homePlateY - baseDistance - 70 }
 ];
 
 const catcher = players.find(p => p.name === 'Catcher');

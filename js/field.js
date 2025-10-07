@@ -14,7 +14,7 @@ function drawDiamond() {
   ctx.fill();
   ctx.stroke();
 
-  const baseSize = 15;
+  const baseSize = 17;
   [first, second, third].forEach(base => {
     ctx.save();
     ctx.translate(base.x, base.y);
@@ -27,7 +27,7 @@ function drawDiamond() {
   drawHomePlate(home.x, home.y, baseSize);
 
   ctx.beginPath();
-  ctx.arc(centerX, home.y - baseDistance, 15, 0, Math.PI * 2);
+  ctx.arc(centerX, home.y - baseDistance, 20, 0, Math.PI * 2);
   ctx.fillStyle = '#a1887f';
   ctx.fill();
 
@@ -43,7 +43,7 @@ function drawDiamond() {
 
 function drawHomePlate(x, y, size) {
   const half = size / 2;
-  const height = size * 0.75;
+  const height = size * 0.7;
 
   ctx.beginPath();
   ctx.moveTo(x - half, y - height);
@@ -57,9 +57,41 @@ function drawHomePlate(x, y, size) {
   ctx.stroke();
 }
 
+const toggleHitZoneBtn = document.getElementById('toggleHitZoneBtn');
+
+if (toggleHitZoneBtn) {
+  toggleHitZoneBtn.addEventListener('click', () => {
+    showHitZone = !showHitZone;
+  });
+}
+
+function drawHitZone() {
+  if (gameState !== 'offense' || !showHitZone || aiBattingEnabled) return;
+
+  const zoneWidth = 20;
+  const zoneHeight = 20;
+  const x = centerX - zoneWidth / 2;
+  const y = homePlateY - zoneHeight + 2;
+
+  hitZone = { x, y, width: zoneWidth, height: zoneHeight };
+
+  ctx.beginPath();
+  ctx.rect(x, y, zoneWidth, zoneHeight);
+  ctx.strokeStyle = 'red';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  ctx.fillStyle = 'rgba(255,0,0,0.2)';
+  ctx.fill();
+}
+
+function updateHitZoneButton() {
+  toggleHitZoneBtn.style.display = (gameState === 'offense') ? 'inline-block' : 'none';
+}
+
 function drawFoulLines() {
   const home = { x: centerX, y: homePlateY };
-  const foulRadius = 400;
+  const foulRadius = 600;
   const leftAngle = Math.PI * 1.25;
   const rightAngle = Math.PI * 1.75;
 
@@ -83,7 +115,7 @@ function drawOutfield() {
   const home = { x: centerX, y: homePlateY };
   ctx.beginPath();
   ctx.moveTo(home.x, home.y);
-  ctx.arc(home.x, home.y, 400, -Math.PI * 0.25, -Math.PI * 0.75, true);
+  ctx.arc(home.x, home.y, 600, -Math.PI * 0.25, -Math.PI * 0.75, true);
   ctx.closePath();
   ctx.fillStyle = '#66bb6a';
   ctx.fill();
@@ -92,7 +124,7 @@ function drawOutfield() {
 
 function drawWarningTrack() {
   const home = { x: centerX, y: homePlateY };
-  const outerRadius = 400;
+  const outerRadius = 600;
   const trackWidth = 15;
 
   ctx.beginPath();
@@ -103,7 +135,7 @@ function drawWarningTrack() {
   ctx.fill();
 }
 
-function drawTabula() {
+/*function drawTabula() {
   const home = { x: centerX, y: homePlateY };
   const plotRadius = 400;
   const tabulaDepth = 10;
@@ -171,7 +203,7 @@ function drawTabula() {
   ctx.fillText(score2.toString(), -tabulaWidth / 2 - 25 + tabulaWidth, -tabulaHeight / 2 + 16);
 
   ctx.restore();
-}
+}*/
 
 function drawBattersBoxes() {
   const boxWidth = 20;
@@ -211,12 +243,12 @@ function drawCatcherBox() {
 }
 
 function drawDugouts() {
-  const dugoutWidth = 80;
-  const dugoutHeight = 30;
-  const roofHeight = 4;
-  const benchHeight = 6;
-  const poleWidth = 2;
-  const offset = 80;
+  const dugoutWidth = 100;
+  const dugoutHeight = 40;
+  const roofHeight = 6;
+  const benchHeight = 8;
+  const poleWidth = 4;
+  const offset = 100;
 
   const home = { x: centerX, y: homePlateY };
 
@@ -240,11 +272,11 @@ function drawDugouts() {
 
     if (benchPlayerImg.complete) {
       const playerCount = 9;
-      const spacing = (dugoutWidth - 20) / playerCount;
+      const spacing = (dugoutWidth - 15) / playerCount;
 
       for (let i = 0; i < playerCount; i++) {
         const x = 5 + i * spacing;
-        const y = dugoutHeight - 24;
+        const y = dugoutHeight - 26;
         const w = 15;
         const h = 20;
 
@@ -274,7 +306,7 @@ function drawDugouts() {
 }
 
 function drawOnDeckCircle() {
-  const radius = 10;
+  const radius = 13;
   const offsetX = 90;
   const offsetY = 5;
       
@@ -320,10 +352,12 @@ function drawField() {
   drawOutfield();
   drawWarningTrack();
   drawFoulLines();
-  drawTabula();
+  //drawTabula();
   drawBattersBoxes(); 
   drawCatcherBox(); 
   drawDiamond();
+  updateHitZoneButton();
+  drawHitZone();
   drawDugouts();
   drawOnDeckCircle();
 }

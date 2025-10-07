@@ -54,7 +54,7 @@ canvas.addEventListener('mousemove', e => {
     const foulLeftAngle = Math.PI * 1.25;
     const foulRightAngle = Math.PI * 1.75;
 
-    const maxDistance = 400 - playerSize;
+    const maxDistance = 600 - playerSize;
 
     let normalizedAngle = angle;
     if (angle < -Math.PI) normalizedAngle += 2 * Math.PI;

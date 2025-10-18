@@ -1,0 +1,520 @@
+html, body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #4caf50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: sans-serif;
+}
+
+canvas {
+  background: #4caf50;
+  border: 1px solid #000;
+  display: block;
+}
+
+.gameContainer {
+  position:relative;
+  display:inline-block;
+}
+
+.gameLogo {
+  position: absolute;
+  top: 20px;
+  width: 200px;
+  height: auto;
+  z-index: 10;
+}
+
+.settingsLogo {
+  position: absolute;
+  top: 130px;
+  left: 20px;
+  width: 40px;
+  height: auto;
+  cursor: pointer;
+  z-index: 10;
+  transition: transform 1s ease;
+}
+
+.settingsLogo:hover {
+  transform: rotate(360deg) scale(1.2); 
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.3s ease;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+.modalContent {
+  background-color: rgba(0,0,0,0.6);
+  padding: 30px 40px;
+  padding-bottom: 70px !important;
+  border-radius: 15px;
+  min-width: 320px;
+  min-height: 200px;
+  box-shadow: 0 0 25px rgba(0,0,0,0.6);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  animation: scaleIn 0.3s ease;
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.modal h2 {
+  color: rgb(224, 224, 224);
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.modalButtons {
+  display: flex;
+  gap: 10px;
+  position: absolute;
+  bottom: 15px;
+  right: 20px;
+}
+
+.saveSettingsBtn {
+  padding: 6px 12px;
+  font-size: 15px;
+  border: none;
+  border-radius: 12px;
+  background-color: rgba(14, 14, 14, 0.9);
+  color: rgb(224, 224, 224);
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.saveSettingsBtn:hover {
+  background-color: rgba(224, 224, 224, 0.9);
+  color: rgb(14, 14, 14);
+}
+
+.volumeControl {
+  flex-direction: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.volumeWrapper {
+  flex: 1;                
+  display: flex;
+  align-items: center;  
+}
+
+#volumeIcon {
+  cursor: pointer;
+  font-size: 28px;
+}
+
+#volumeSlider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 75%;
+  height: 2px;
+  background: rgb(224, 224, 224);
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+}
+
+#volumeSlider::-webkit-slider-runnable-track {
+  height: 3px;
+  border-radius: 3px;
+  background: transparent;
+}
+
+#volumeSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 8px;               
+  height: 24px;            
+  border-radius: 2px;     
+  background: rgb(224, 224, 224);       
+  border: 1px solid black;  
+  cursor: pointer;
+  margin-top: -10px;
+}
+
+#volumeSlider::-moz-range-thumb {
+  width: 6px;
+  height: 18px;
+  border-radius: 2px;
+  background: white;
+  border: 2px solid black;
+  cursor: pointer;
+  transform: translateY(-10px);
+}
+
+.keyBindRow {
+  display: flex;
+  width: 90%;
+  justify-content: center;
+}
+
+.keyBindItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  width: 30%;
+}
+
+.keyBindLabel {
+  font-weight: bold;
+  color: rgb(224, 224, 224);
+  font-size: 15px;
+}
+
+.stopPitchKeyInput {
+  width: 45%;
+  padding: 3px 6px;
+    margin-top: 5px;
+  border-radius: 8px;
+  border: none;
+  background-color: rgba(14, 14, 14, 0.9);
+  color: rgb(224, 224, 224);
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.stopPitchKeyInput:hover {
+  cursor: pointer;
+}
+
+.stopPitchKeyInput::placeholder {
+  color: rgb(224,224,224);
+}
+
+.stopPitchKeyInput:focus {
+  background-color: rgba(255,255,255,0.2);
+}
+
+.closeModalBtn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: rgb(224, 224, 224);
+  font-weight: bold;
+  transition: transform .3s ease;
+}
+
+.closeModalBtn:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.settingItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 60%;
+  font-weight: bold;
+  color: white;
+  font-size: 17px;
+}
+
+.settingDivider {
+  width: 90%;
+  height: 2px;
+  border: none;
+  border-radius: 2px;
+  background: linear-gradient(
+    to right,
+    rgba(224, 224, 224, 0) 0%,
+    rgba(224, 224, 224, 0.9) 50%,
+    rgba(224, 224, 224, 0) 100%
+  );
+  margin: 0;
+  opacity: 0.9;
+}
+
+.settingItem label {
+  color: rgb(224, 224, 224);
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 46px;
+  height: 26px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: transparent;
+  border: 1px solid rgb(224, 224, 224);
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 19px;
+  width: 19px;
+  left: 3px;
+  bottom: 3.5px;
+  background-color: rgb(224, 224, 224);
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: black;
+  border: 1px solid black;
+}
+
+input:checked + .slider:before {
+  transform: translateX(19px);
+}
+
+.modalBox {
+  background-color: rgb(224, 224, 224);
+  padding: 30px 40px;
+  border-radius: 15px;
+  min-width: 250px;
+  min-height: 120px;
+  box-shadow: 0 0 25px rgba(0,0,0,0.6);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.modalBox p {
+  color: black;
+  font-weight: bold;
+  text-align: center;
+} 
+
+.confrimButtons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.confrimBtn {
+  background-color: black;
+  border: 1px solid black;
+  padding: 8px 16px;
+  font-size: 15px;
+  border-radius: 6px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+  transition: all .3s ease-in-out;
+  cursor: pointer;
+  font-weight: bold;
+  color: rgb(224, 224, 224);
+}
+
+.confrimBtn:hover {
+  background-color: rgb(224, 224, 224);
+  color: black;
+}
+
+.throwButton {
+  background-color: #fff;
+  border: 1px solid #005299;
+  border-radius: 8px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+  transition: all .3s ease-in-out;
+  cursor: pointer;
+  font-weight: bold;
+  color: black;
+}
+
+.throwButton:hover {
+  background-color: #005299;
+  color: white;
+}
+
+.throwButton:disabled {
+  background-color: #ccc;
+  border-color: #999;
+  color: #666;
+  cursor: not-allowed;
+  caret-color: red !important;
+  box-shadow: none;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#result {
+  font-size: 32px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.pickoffBtn {
+  position: absolute;
+  font-size: 11px;
+  margin-top: 25px;
+  font-weight: bold;
+  color: black;
+  background-color: transparent;
+  border: 1px solid #005299;
+  border-radius: 8px;
+  padding: 4px 8px;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+  transition: all .3s ease-in-out;
+}
+
+.pickoffBtn:hover {
+  background-color: #005299;
+  color: white;
+}
+
+.pickoffBtn.active-pickoff {
+  background-color: #005299;
+  color: white;
+}
+
+.pickoffBtn.hidden {
+  display: none !important;
+}
+
+#pitchTypeContainer {
+  display: flex;
+  position:absolute;
+  z-index:10;
+  gap: 5px;
+}
+
+.pitchTypeBtn {
+  font-size: 10px;
+  font-weight: bold;
+  color: black;
+  background-color: transparent;
+  border: 1px solid #005299;
+  padding: 3px 6px;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+  transition: all .3s ease-in-out;
+}
+
+.pitchTypeBtn.activePitch {
+  background-color: #005299;
+  color: white;
+}
+
+.display {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.stealBtn {
+  position: absolute;
+  display: none;
+  font-size: 11px;
+  z-index: 4;
+  background: transparent;
+  color: black;
+  font-weight: bold;
+  border: 1px solid #005299;
+  border-radius: 8px;
+  padding: 4px 8px;
+  margin: 2px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+  transition: all .3s ease-in-out;
+  cursor: pointer;
+}
+.stealBtn.active-steal {
+  background: #005299;
+  color: #fff;
+}
+
+.stealButtons {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+}
+.stealBtn {
+  pointer-events: auto;
+}
+
+#controllerButtons {
+  position: absolute;
+  bottom: 50px; 
+  left: 150px;
+  display: flex;
+  gap: 30px;
+}
+
+.controllerBtn {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: rgba(0,0,0,0.4);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  border: 2px solid white;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.controllerBtn:hover {
+  background-color: rgba(255,215,0,0.4);
+  transform: scale(1.05);
+}
+
+.controllerBtn:active {
+  background-color: rgba(255,215,0,0.8);
+  transform: scale(0.95);
+}
+
+

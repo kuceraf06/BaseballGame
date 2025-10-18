@@ -1,0 +1,13 @@
+# Node
+node_modules/
+npm-debug.log
+
+# Build output
+dist/
+out/
+*.exe
+
+# Editor settings
+.vscode/
+.DS_Store
+Thumbs.db

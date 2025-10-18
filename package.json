@@ -1,0 +1,31 @@
+{
+  "name": "baseballdeskop",
+  "version": "1.0.0",
+  "description": "Desktopová verze baseballové hry",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder"
+  },
+  "keywords": ["game", "baseball", "electron"],
+  "author": "Filip",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "electron": "^38.3.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.filip.baseballdeskop",
+    "productName": "BaseballDesktop",
+    "directories": {
+      "output": "dist"
+    },
+    "files": ["**/*"],
+    "win": {
+      "target": "nsis",
+      "icon": "images/favicon.ico",
+      "signAndEditExecutable": false
+    }
+  }
+}

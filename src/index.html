@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon.ico">
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <title>2D Baseball</title>
+</head>
+<body>
+
+  <div id="gameContainer" class="gameContainer">
+
+    <img src="images/logo.png" alt="logo" class="gameLogo">
+
+    <img src="images/settings.png" alt="settings" class="settingsLogo">
+
+    <canvas id="field" width="1100" height="750"></canvas>
+
+    <div class="pickoffButtons">
+      <button id="pickoffButton" class="pickoffBtn" tabindex="-1">1B</button>
+      <button id="pickoffButton2B" class="pickoffBtn" tabindex="-1">2B</button>
+      <button id="pickoffButton3B" class="pickoffBtn" tabindex="-1">3B</button>
+    </div>
+
+    <div class="stealButtons">
+      <button id="stealButton2B" class="stealBtn" tabindex="-1">1B&nbsp;&rarr;&nbsp;2B</button>
+      <button id="stealButton3B" class="stealBtn" tabindex="-1">2B&nbsp;&rarr;&nbsp;3B</button>
+    </div>
+
+    <div id="pitchTypeContainer">
+      <button class="pitchTypeBtn activePitch" data-pitch="FB">FB</button>
+      <button class="pitchTypeBtn" data-pitch="CH">CH</button>
+      <button class="pitchTypeBtn" data-pitch="SL">SL</button>
+    </div>
+
+  </div>
+
+  <br />
+
+  <button class="throwButton" id="throwButton" tabindex="-1">Ready</button><br />
+
+  <div id="settingsModal" class="modal">
+    <div class="modalContent">
+      <h2>Settings</h2>
+
+      <div class="settingItem volumeControl">
+        <label for="volumeSlider">Volume:</label>
+        <div class="volumeWrapper">
+          <input type="range" id="volumeSlider" min="0" max="1" step="0.01">
+        </div>
+        <i id="volumeIcon" class='bx bx-volume-full'></i>
+      </div>
+
+      <hr class="settingDivider">
+      
+      <div class="settingItem">
+        <label>Strike zone:</label>
+        <label class="switch">
+          <input type="checkbox" id="strikeZoneSwitch">
+          <span class="slider round"></span>
+        </label>
+      </div>
+
+      <hr class="settingDivider">
+
+      <div class="keyBindRow">
+        <div class="keyBindItem">
+          <label for="stopPitchKeyInput" class="keyBindLabel">Stop pitch</label>
+          <input type="text" id="stopPitchKeyInput" class="stopPitchKeyInput" maxlength="1" placeholder="Space">
+        </div>
+        <div class="keyBindItem">
+          <label for="swingKeyInput" class="keyBindLabel">Swing</label>
+          <input type="text" id="swingKeyInput" class="stopPitchKeyInput" maxlength="1" placeholder="Space">
+        </div>
+        <div class="keyBindItem">
+          <label for="settingsToggleKeyInput" class="keyBindLabel">Settings</label>
+          <input type="text" id="settingsToggleKeyInput" class="stopPitchKeyInput" maxlength="1" placeholder="Escape">
+        </div>
+      </div>
+      <div class="keyBindRow">
+        <div class="keyBindItem">
+          <label for="stopPitchKeyInput" class="keyBindLabel">1B</label>
+          <input type="text" id="throwTo1BKeyInput" class="stopPitchKeyInput" maxlength="1" placeholder="1">
+        </div>
+        <div class="keyBindItem">
+          <label for="swingKeyInput" class="keyBindLabel">2B</label>
+          <input type="text" id="throwTo2BKeyInput" class="stopPitchKeyInput" maxlength="1" placeholder="2">
+        </div>
+        <div class="keyBindItem">
+          <label for="settingsToggleKeyInput" class="keyBindLabel">3B</label>
+          <input type="text" id="throwTo3BKeyInput" class="stopPitchKeyInput" maxlength="1" placeholder="3">
+        </div>
+      </div>
+
+      <div class="modalButtons">
+        <button id="saveSettingsBtn" class="saveSettingsBtn">Save</button>
+        <button id="saveCloseSettingsBtn" class="saveSettingsBtn">Save & close</button>
+      </div>
+    
+      <button class="closeModalBtn" id="closeModalBtn">&times;</button>
+    </div>
+  </div>
+
+  <div id="confirmCloseModal" class="modal">
+    <div class="modalBox">
+      <p>
+        You have unsaved changes.<br>Are you sure you want to close?
+      </p>
+      <div class="confrimButtons">
+        <button id="cancelCloseBtn" class="confrimBtn">Cancel</button>
+        <button id="confirmCloseBtn" class="confrimBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button id="toggleStateBtn" class="stateBtn">Toggle Off/Def</button>
+  </div>
+
+  <script src="js/game-setup.js"></script>
+  <script src="js/game-state.js"></script>
+  <script src="js/scoreboard.js"></script>
+  <script src="js/user-settings.js"></script>
+  <script src="js/field.js"></script>
+  <script src="js/pitching.js"></script>
+  <script src="js/pickoff.js"></script>
+  <script src="js/steal.js"></script>
+  <script src="js/ai-pitching.js"></script>
+  <script src="js/game-loop.js"></script>
+  <script src="js/runners.js"></script>
+  <script src="js/dugout.js"></script>
+  <script src="js/drag-and-drop.js"></script>
+  <script src="js/batters.js"></script>
+  <script src="js/ai-steal.js"></script>
+  <script src="js/ai-batting.js"></script>
+  <script src="js/render-game.js"></script>
+  <script src="js/throwing.js"></script>
+  <script src="js/controller.js"></script>
+
+</body>
+</html>

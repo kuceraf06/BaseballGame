@@ -142,10 +142,22 @@ function evaluateResult(forceHit) {
       return;
     } else if (forceHit === false) {
       strikeCount++;
+
+      if (swingAndMissSound) {
+        swingAndMissSound.currentTime = 0;
+        swingAndMissSound.play().catch(() => {});
+      }
+
       if (strikeCount >= 3) {
         showResultText("SWING & MISS", "red", 1000);
         setTimeout(() => {
           showResultText("STRIKEOUT!", "red");
+
+          if (strikeoutSound) {
+            strikeoutSound.currentTime = 0;
+            strikeoutSound.play().catch(() => {});
+          }
+
           preventReturnToPitcher = true;
           atBatOver = true;
           strikeOut();
@@ -164,19 +176,47 @@ function evaluateResult(forceHit) {
 
   if (!swingActive && ball.y >= homePlateY) {
     if (slider.result === "STRIKE") {
+
+      if (strikeCount < 2) {
+        if (strikeSound) {
+          strikeSound.currentTime = 0;
+          strikeSound.play().catch(() => {});
+        }
+      }
+
       showResultText("STRIKE", "green");
       strikeCount++;
       if (strikeCount >= 3) {
         showResultText("STRIKEOUT!", "red");
+
+        if (strikeoutSound) {
+          strikeoutSound.currentTime = 0;
+          strikeoutSound.play().catch(() => {});
+        }
+
         preventReturnToPitcher = true;
         atBatOver = true;
         strikeOut();
       }
     } else {
+
+    if (ballCount < 3) {
+      if (ballSound) {
+        ballSound.currentTime = 0;
+        ballSound.play().catch(() => {});
+      }
+    }
+
       showResultText("BALL!", "red");
       ballCount++;
       if (ballCount >= 4) {
         showResultText("BALL FOUR!", "red");
+
+        if (ballfourSound) {
+          ballfourSound.currentTime = 0;
+          ballfourSound.play().catch(() => {});
+        }
+
         preventReturnToPitcher = true;
         atBatOver = true;
         ballFour();
@@ -378,6 +418,10 @@ function handleHit() {
   if (Math.random() < homerunChance) {
     radius = warningTrackRadius + 5 + Math.random() * (70 - 5);
     showResultText("HOMERUN!", "gold", 2000);
+    if (homerunSound) { 
+      homerunSound.currentTime = 0; 
+      homerunSound.play().catch(() => {}); 
+    }
 
     ball.startX = ball.x;
     ball.startY = ball.y;
@@ -424,6 +468,17 @@ function handleHit() {
     const hitType = evaluateHitType(ball);
     setTimeout(() => {
       animateHitRunners(hitType, batter, () => {
+        // zvuk se spustí uvnitř callbacku animateHitRunners
+        if (hitType === "SINGLE" && singleSound) {
+          singleSound.currentTime = 0;
+          singleSound.play().catch(() => {});
+        } else if (hitType === "DOUBLE" && doubleSound) {
+          doubleSound.currentTime = 0;
+          doubleSound.play().catch(() => {});
+        } else if (hitType === "TRIPLE" && tripleSound) {
+          tripleSound.currentTime = 0;
+          tripleSound.play().catch(() => {});
+        }
       });
     }, 1000);
   }

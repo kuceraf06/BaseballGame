@@ -25,11 +25,11 @@ palkarImg.src = 'images/palkar.png';
 polarImg.src = 'images/polar.png';
 bezecImg.src = 'images/bezec.png';
 ballImg.src = 'images/baseball.png';
-batterDugoutImg.src = 'images/batterDugout.png';
 benchPlayerImg.src = 'images/benchPlayer.png';
 slideImg.src = 'images/slide.png';
 actionImg.src = 'images/akce.png';
 logoImg.src = 'images/logo.png';
+batterDugoutImg.src = 'images/batterDugout2.png';
 
 const throwSound = new Audio('audio/throw.mp3');
 const slideSound = new Audio('audio/slide.wav');
@@ -44,6 +44,17 @@ const hitSound = new Audio('audio/hit.mp3');
 hitSound.playbackRate = 2;
 const swingSound = new Audio('audio/swing.mp3');
 swingSound.playbackRate = 6;
+const strikeSound = new Audio('audio/strike.mp3');
+const ballSound = new Audio('audio/ball.mp3');
+const swingAndMissSound = new Audio('audio/swingandmiss.mp3');
+const ballfourSound = new Audio('audio/ballfour.mp3');
+const strikeoutSound = new Audio('audio/strikeout.mp3');
+const safeSound = new Audio('audio/safe.mp3');
+const outSound = new Audio('audio/out.mp3');
+const singleSound = new Audio('audio/single.mp3');
+const doubleSound = new Audio('audio/double.mp3');
+const tripleSound = new Audio('audio/triple.mp3');
+const homerunSound = new Audio('audio/homerun.mp3');
 
 const allSounds = [
   throwSound,
@@ -51,7 +62,18 @@ const allSounds = [
   walkSound,
   runningSound,
   hitSound,
-  swingSound
+  swingSound,
+  ballSound,
+  ballfourSound,
+  strikeSound,
+  strikeoutSound,
+  safeSound,
+  outSound,
+  singleSound,
+  doubleSound,
+  tripleSound,
+  homerunSound,
+  swingAndMissSound
 ];
 
 if (typeof applyVolumeSettings === 'function') applyVolumeSettings();

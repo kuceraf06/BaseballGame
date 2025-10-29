@@ -111,7 +111,13 @@ function startPickoff1B() {
   }
 
   animateBall(() => {
-    showResultText("SAFE!", "green");
+    if (!runnersInStealing) {
+      showResultText("SAFE!", "green");
+      if (safeSound) { 
+        safeSound.currentTime = 0; 
+        safeSound.play().catch(() => {}); 
+      }
+    }
     ball.owner = "firstBase";
     draw();
 
@@ -165,7 +171,13 @@ function startPickoff2B() {
   }
 
   animateBall(() => {
-   showResultText("SAFE!", "green");
+    if (!runnersInStealing) {
+      showResultText("SAFE!", "green");
+      if (safeSound) { 
+        safeSound.currentTime = 0; 
+        safeSound.play().catch(() => {}); 
+      }
+    }
     ball.owner = "polar";
 
     if (polar) {
@@ -226,7 +238,13 @@ function startPickoff3B() {
   }
 
   animateBall(() => {
-    showResultText("SAFE!", "green");
+    if (!runnersInStealing) {
+      showResultText("SAFE!", "green");
+      if (safeSound) { 
+        safeSound.currentTime = 0; 
+        safeSound.play().catch(() => {}); 
+      }
+    }
 
     if (polar) {
       setTimeout(() => {
@@ -410,7 +428,13 @@ function moveRunnerBackToBaseAndLead(runner, basePos, onComplete) {
     } else {
       runner.x = baseCenterX;
       runner.y = baseCenterY;
-      showResultText("SAFE!", "green");
+      if (!runnersInStealing) {
+        showResultText("SAFE!", "green");
+        if (safeSound) { 
+          safeSound.currentTime = 0; 
+          safeSound.play().catch(() => {}); 
+        }
+      }
 
       setTimeout(() => {
         runner.state = "returning";

@@ -1,7 +1,3 @@
-// =========================
-// THROW CONTROLLER LOGIC
-// =========================
-
 function getFielderPosition(owner) {
   switch (owner) {
     case "firstBase": {
@@ -88,7 +84,7 @@ function throwBall(fromOwner, targetBaseLabel) {
   const throwSpeed = 350;
   let lastTime = performance.now(); 
 
-function slowThrowStep(currentTime) {
+  function slowThrowStep(currentTime) {
     const deltaTime = (currentTime - lastTime) / 1000;
     lastTime = currentTime;
 
@@ -105,6 +101,75 @@ function slowThrowStep(currentTime) {
       pickoffInProgress = false;
       endAnimation();
       draw();
+      return;
+    }
+
+    ball.progress += move / distance;
+    ball.x = ball.startX + dx * ball.progress;
+    ball.y = ball.startY + dy * ball.progress;
+
+    draw();
+    requestAnimationFrame(slowThrowStep);
+  }
+
+  requestAnimationFrame(slowThrowStep);
+}
+
+function throwBallWithCallback(fromOwner, targetBaseLabel, onComplete) {
+  const pitcher = players.find(p => p.name === "Nadhazovac");
+  const fromPlayer = getFielderPosition(fromOwner) || pitcher;
+
+  let toPlayer;
+  let toOwner;
+
+  // Steal logika: nejdřív hod na fieldera u mety, potom callback hod na cílovou metu
+  if (runnersInStealing && targetBaseLabel === "1B") {
+    // první fáze steal: hod na 1B fieldera
+    toPlayer = getFielderPosition("firstBase");
+    toOwner = "firstBase";
+  } else if (runnersInStealing && (targetBaseLabel === "2B" || targetBaseLabel === "3B") && fromOwner === "firstBase") {
+    // druhá fáze steal: hod od fieldera na cílovou metu
+    toOwner = getTargetOwner(targetBaseLabel);
+    toPlayer = getFielderPosition(toOwner);
+  } else {
+    toOwner = getTargetOwner(targetBaseLabel);
+    toPlayer = getFielderPosition(toOwner);
+  }
+
+  if (!fromPlayer || !toPlayer) return;
+
+  ball.startX = fromPlayer.x + playerSize / 2;
+  ball.startY = fromPlayer.y + playerSize / 2;
+  ball.endX = toPlayer.x + playerSize / 2;
+  ball.endY = toPlayer.y + playerSize / 2;
+  ball.x = ball.startX;
+  ball.y = ball.startY;
+  ball.progress = 0;
+  ball.active = true;
+  pickoffInProgress = true;
+  startAnimation();
+
+  const throwSpeed = 350;
+  let lastTime = performance.now();
+
+  function slowThrowStep(currentTime) {
+    const deltaTime = (currentTime - lastTime) / 1000;
+    lastTime = currentTime;
+
+    const dx = ball.endX - ball.startX;
+    const dy = ball.endY - ball.startY;
+    const distance = Math.sqrt(dx*dx + dy*dy);
+    const move = throwSpeed * deltaTime;
+
+    if (distance <= move || ball.progress >= 1) {
+      ball.x = ball.endX;
+      ball.y = ball.endY;
+      ball.progress = 1;
+      ball.owner = toOwner;
+      pickoffInProgress = false;
+      endAnimation();
+      draw();
+      if (onComplete) onComplete();
       return;
     }
 

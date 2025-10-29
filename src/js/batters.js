@@ -89,7 +89,9 @@ function updateSwingAnimation(timestamp) {
 }
 
 document.addEventListener('keydown', (e) => {
-  if (e.key === swingKey && !pickoffInProgress && gameState === 'offense' && ball.active) {
+  // normalize key name so custom binds and variants work
+  const keyName = (typeof normalizeKeyName === 'function') ? normalizeKeyName(e.key) : e.key;
+  if (keyName === swingKey && !pickoffInProgress && gameState === 'offense' && ball.active) {
     triggerSwing();
   }
 });

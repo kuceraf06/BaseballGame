@@ -38,9 +38,11 @@ function handleControllerClick(e) {
     if (runnersInStealing && hasThrownDuringSteal) return;
     if (pickoffInProgress) return;
 
-    const rect = canvas.getBoundingClientRect();
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
+    const wrapper = document.querySelector('.gameWrapper');
+    const rect = wrapper.getBoundingClientRect();
+
+    const mouseX = (e.clientX - rect.left) / gameScale;
+    const mouseY = (e.clientY - rect.top) / gameScale;
 
     const size = 60;
 
@@ -71,10 +73,13 @@ function handleControllerKey(e) {
     if (runnersInStealing && hasThrownDuringSteal) return;
     if (!ball.owner) return;
 
+    // normalize incoming key for custom binds
+    const keyName = (typeof normalizeKeyName === 'function') ? normalizeKeyName(e.key) : e.key;
+
     let baseLabel = null;
-    if (e.key === throwTo1BKey) baseLabel = '1B';
-    else if (e.key === throwTo2BKey) baseLabel = '2B';
-    else if (e.key === throwTo3BKey) baseLabel = '3B';
+    if (keyName === throwTo1BKey) baseLabel = '1B';
+    else if (keyName === throwTo2BKey) baseLabel = '2B';
+    else if (keyName === throwTo3BKey) baseLabel = '3B';
     if (!baseLabel) return;
 
     if (ball.owner && runnersInStealing) {
@@ -158,9 +163,11 @@ function handleStopClick(canvas, e) {
     if (gameState !== 'defense') return;
     if (!slider.active || slider.stopped) return;
 
-    const rect = canvas.getBoundingClientRect();
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
+    const wrapper = document.querySelector('.gameWrapper');
+    const rect = wrapper.getBoundingClientRect();
+
+    const mouseX = (e.clientX - rect.left) / gameScale;
+    const mouseY = (e.clientY - rect.top) / gameScale;
 
     const stopX = 175;
     const stopY = canvas.height - 125;
@@ -179,9 +186,11 @@ function handleStopClick(canvas, e) {
 function handleSwingClick(canvas, e) {
     if (gameState !== 'offense' || !ball.active) return;
 
-    const rect = canvas.getBoundingClientRect();
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
+    const wrapper = document.querySelector('.gameWrapper');
+    const rect = wrapper.getBoundingClientRect();
+
+    const mouseX = (e.clientX - rect.left) / gameScale;
+    const mouseY = (e.clientY - rect.top) / gameScale;
 
     const swingX = 175;
     const swingY = canvas.height - 125;
@@ -202,9 +211,11 @@ function handleSwingClick(canvas, e) {
 }
 
 function updateCursor(canvas, e) {
-    const rect = canvas.getBoundingClientRect();
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
+    const wrapper = document.querySelector('.gameWrapper');
+    const rect = wrapper.getBoundingClientRect();
+
+    const mouseX = (e.clientX - rect.left) / gameScale;
+    const mouseY = (e.clientY - rect.top) / gameScale;
 
     const stopX = 175;
     const stopY = canvas.height - 125;

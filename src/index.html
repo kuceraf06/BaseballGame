@@ -1,48 +1,57 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="robots" content="index, follow"/>
+  <meta name="author" content="Filip"/>
+  <meta name="description" content="2D Baseball — baseball game developed in HTML5, CSS and JavaScript."/>
+  <meta name="keywords" content="2D baseball, baseball game, sport game, pixel art, baseball simulator"/>
+  <meta name="theme-color" content="#4caf50"/>
+  <meta name="referrer" content="no-referrer-when-downgrade" />
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" type="image/png" sizes="32x32" href="images/favicon.ico">
-  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link href='https://unpkg.com/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>
   <title>2D Baseball</title>
 </head>
 <body>
+  <div id="windowControls" class="windowControls">
+    <button id="minimizeBtn" class="winBtn"><i class='bx  bx-minus'></i> </button>
+    <button id="desktopBtn" class="winBtn"><i class='bx bx-exit-fullscreen'></i></button>
+    <button id="closeBtn" class="winBtn"><i class='bx  bx-x'></i></button>
+  </div>    
+    <i class='bx bxs-user-circle userLogo accountLogo'></i>
+    <img src="images/settings.png" alt="settings" class="settingsLogo userLogo">
+    <img src="images/menu.png" alt="menu" class="menuLogo userLogo">
 
-  <div id="gameContainer" class="gameContainer">
-
-    <img src="images/logo.png" alt="logo" class="gameLogo">
-
-    <img src="images/settings.png" alt="settings" class="settingsLogo">
-
-    <canvas id="field" width="1100" height="750"></canvas>
-
-    <div class="pickoffButtons">
-      <button id="pickoffButton" class="pickoffBtn" tabindex="-1">1B</button>
-      <button id="pickoffButton2B" class="pickoffBtn" tabindex="-1">2B</button>
-      <button id="pickoffButton3B" class="pickoffBtn" tabindex="-1">3B</button>
+    
+  <div id="menuModal" class="modal">
+    <div class="modalContent menuContent">
+      <h2>Main Menu</h2>
+      <button id="closeMenuBtn" class="menuBtn">Play <i class='bx bx-play-circle'></i></button>
+      <button id="menuSettingsBtn" class="menuBtn">Settings <i class='bx bx-cog'></i></button>
+      <a href="#" target="_blank"><button id="menuSettingsBtn" class="menuBtn">About <i class='bx bx-right-top-arrow-circle arrow-up'></i></button></a>
+      <button id="exitAppBtn" class="menuBtn">Exit <i class='bx bx-log-out'></i></button>
+      <p>Version: 1.0.0</p>
+      <button class="closeModalBtn" id="closeMenuCross">&times;</button>
     </div>
-
-    <div class="stealButtons">
-      <button id="stealButton2B" class="stealBtn" tabindex="-1">1B&nbsp;&rarr;&nbsp;2B</button>
-      <button id="stealButton3B" class="stealBtn" tabindex="-1">2B&nbsp;&rarr;&nbsp;3B</button>
-    </div>
-
-    <div id="pitchTypeContainer">
-      <button class="pitchTypeBtn activePitch" data-pitch="FB">FB</button>
-      <button class="pitchTypeBtn" data-pitch="CH">CH</button>
-      <button class="pitchTypeBtn" data-pitch="SL">SL</button>
-    </div>
-
   </div>
-
-  <br />
-
-  <button class="throwButton" id="throwButton" tabindex="-1">Ready</button><br />
 
   <div id="settingsModal" class="modal">
     <div class="modalContent">
+      <i id="backToMenuBtn" class='bx bx-left-arrow-alt'></i>
       <h2>Settings</h2>
+
+      <div class="settingItem">
+        <label for="windowModeSelect">Window mode:</label>
+        <select id="windowModeSelect">
+          <option value="fullscreen">Fullscreen</option>
+          <option value="windowed">Windowed</option>
+        </select>
+      </div>
+
+      <hr class="settingDivider">
 
       <div class="settingItem volumeControl">
         <label for="volumeSlider">Volume:</label>
@@ -66,20 +75,6 @@
 
       <div class="keyBindRow">
         <div class="keyBindItem">
-          <label for="stopPitchKeyInput" class="keyBindLabel">Stop pitch</label>
-          <input type="text" id="stopPitchKeyInput" class="stopPitchKeyInput" maxlength="1" placeholder="Space">
-        </div>
-        <div class="keyBindItem">
-          <label for="swingKeyInput" class="keyBindLabel">Swing</label>
-          <input type="text" id="swingKeyInput" class="stopPitchKeyInput" maxlength="1" placeholder="Space">
-        </div>
-        <div class="keyBindItem">
-          <label for="settingsToggleKeyInput" class="keyBindLabel">Settings</label>
-          <input type="text" id="settingsToggleKeyInput" class="stopPitchKeyInput" maxlength="1" placeholder="Escape">
-        </div>
-      </div>
-      <div class="keyBindRow">
-        <div class="keyBindItem">
           <label for="stopPitchKeyInput" class="keyBindLabel">1B</label>
           <input type="text" id="throwTo1BKeyInput" class="stopPitchKeyInput" maxlength="1" placeholder="1">
         </div>
@@ -92,6 +87,20 @@
           <input type="text" id="throwTo3BKeyInput" class="stopPitchKeyInput" maxlength="1" placeholder="3">
         </div>
       </div>
+      <div class="keyBindRow">
+        <div class="keyBindItem">
+          <label for="stopPitchKeyInput" class="keyBindLabel">Stop pitch</label>
+          <input type="text" id="stopPitchKeyInput" class="stopPitchKeyInput" maxlength="1" placeholder="Space">
+        </div>
+        <div class="keyBindItem">
+          <label for="swingKeyInput" class="keyBindLabel">Swing</label>
+          <input type="text" id="swingKeyInput" class="stopPitchKeyInput" maxlength="1" placeholder="Space">
+        </div>
+        <div class="keyBindItem">
+          <label for="resetSettings" class="keyBindLabel">Reset binds</label>
+          <button  id="resetSettings" class="stopPitchKeyInput resetBtn" tabindex="0">Reset</button>
+        </div>
+      </div>
 
       <div class="modalButtons">
         <button id="saveSettingsBtn" class="saveSettingsBtn">Save</button>
@@ -102,10 +111,21 @@
     </div>
   </div>
 
+  <div id="userModal" class="modal">
+    <div class="modalContent userContent">
+      <h2>User Account</h2>
+      <p><strong>Name:</strong> <span id="userName">Filip</span></p>
+      <p><strong>Account ID:</strong> <span id="userID">123456</span></p>
+      <button id="logoutBtn" class="menuBtn">Logout <i class='bx bx-log-out'></i></button>
+      <button class="closeModalBtn" id="closeUserModal">&times;</button>
+    </div>
+  </div>  
+
   <div id="confirmCloseModal" class="modal">
     <div class="modalBox">
       <p>
-        You have unsaved changes.<br>Are you sure you want to close?
+        You have unsaved changes.<br>
+        Are you sure you want to close?
       </p>
       <div class="confrimButtons">
         <button id="cancelCloseBtn" class="confrimBtn">Cancel</button>
@@ -114,8 +134,63 @@
     </div>
   </div>
 
-  <div class="controls">
-    <button id="toggleStateBtn" class="stateBtn">Toggle Off/Def</button>
+  <div id="confirmResetModal" class="modal">
+    <div class="modalBox">
+      <p>
+        Do you really want to reset<br> 
+        all key binds to default?
+      </p>
+      <div class="confrimButtons">
+        <button id="cancelResetBtn" class="confrimBtn">Cancel</button>
+        <button id="confirmResetBtn" class="confrimBtn">Reset</button>
+      </div>
+    </div>
+  </div>  
+
+  <div id="confirmExitModal" class="modal">
+    <div class="modalBox">
+      <p>
+      </p>
+      <div class="confrimButtons">
+        <button id="cancelExitBtn" class="confrimBtn">Cancel</button>
+        <button id="confirmExitBtn" class="confrimBtn">Exit</button>
+      </div>
+    </div>
+  </div>  
+
+  <div class="gameWrapper">
+  <div id="gameContainer" class="gameContainer">
+
+    <img src="images/logo.png" alt="logo" class="gameLogo">
+
+    <canvas id="field" width="1100" height="768"></canvas>
+
+    <div class="pickoffButtons">
+      <button id="pickoffButton" class="pickoffBtn" tabindex="-1">1B</button>
+      <button id="pickoffButton2B" class="pickoffBtn" tabindex="-1">2B</button>
+      <button id="pickoffButton3B" class="pickoffBtn" tabindex="-1">3B</button>
+    </div>
+ 
+    <div class="stealButtons">
+      <button id="stealButton2B" class="stealBtn" tabindex="-1">1B&nbsp;&rarr;&nbsp;2B</button>
+      <button id="stealButton3B" class="stealBtn" tabindex="-1">2B&nbsp;&rarr;&nbsp;3B</button>
+    </div>
+
+    <div id="pitchTypeContainer">
+      <button class="pitchTypeBtn activePitch" data-pitch="FB">FB</button>
+      <button class="pitchTypeBtn" data-pitch="CH">CH</button>
+      <button class="pitchTypeBtn" data-pitch="SL">SL</button>
+    </div>
+
+  </div>
+
+  <br />
+
+  <button class="throwButton" id="throwButton" tabindex="-1">Ready</button><br />
+
+    <div class="controls"> 
+      <button id="toggleStateBtn" class="stateBtn">Toggle Off/Def</button> 
+    </div> 
   </div>
 
   <script src="js/game-setup.js"></script>
@@ -137,6 +212,7 @@
   <script src="js/render-game.js"></script>
   <script src="js/throwing.js"></script>
   <script src="js/controller.js"></script>
+  <script src="js/scale.js"></script>
 
 </body>
 </html>

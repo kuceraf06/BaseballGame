@@ -36,7 +36,7 @@ function aiDecideSwing() {
     if (ballInZone === true) {
       shouldSwing = Math.random() < 0.85;
     } else if (ballInZone === false) {
-      shouldSwing = Math.random() < 0;
+      shouldSwing = Math.random() < 0.20;
     } else {
       shouldSwing = false; 
     }

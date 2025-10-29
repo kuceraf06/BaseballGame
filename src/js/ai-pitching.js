@@ -6,15 +6,15 @@ function aiPitch() {
   hitRegistered = false;
   swingActive = false;
 
-  if (runnerOnFirstBase && Math.random() < 0.16) {
+  if (runnerOnFirstBase && Math.random() < 0.25) {
     startPickoff1B();
     return;
   }
-  if (runnerOnSecondBase && Math.random() < 0.08) {
+  if (runnerOnSecondBase && Math.random() < 0.20) {
     startPickoff2B();
     return;
   }
-  if (runnerOnThirdBase && Math.random() < 0.02) {
+  if (runnerOnThirdBase && Math.random() < 0.04) {
     startPickoff3B();
     return;
   }

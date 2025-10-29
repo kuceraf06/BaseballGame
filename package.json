@@ -1,13 +1,13 @@
 {
-  "name": "baseballdeskop",
+  "name": "2dbaseball",
   "version": "1.0.0",
-  "description": "Desktopová verze baseballové hry",
+  "description": "2D Baseball — baseball game developed in HTML5, CSS and JavaScript.",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "dist": "electron-builder"
   },
-  "keywords": ["game", "baseball", "electron"],
+  "keywords": ["2D baseball", "baseball game", "sport game", "pixel art", "baseball simulator"],
   "author": "Filip",
   "license": "ISC",
   "type": "commonjs",
@@ -16,15 +16,19 @@
     "electron-builder": "^26.0.12"
   },
   "build": {
-    "appId": "com.filip.baseballdeskop",
-    "productName": "BaseballDesktop",
+    "appId": "com.filip.2dbaseball",
+    "productName": "2D Baseball",
     "directories": {
       "output": "dist"
     },
-    "files": ["**/*"],
+    "files": [
+      "main.js",
+      "src/**/*",
+      "package.json"
+    ],
     "win": {
       "target": "nsis",
-      "icon": "images/favicon.ico",
+      "icon": "src/images/favicon.ico",
       "signAndEditExecutable": false
     }
   }

@@ -396,8 +396,10 @@ function triggerStopPitch() {
 
 canvas.addEventListener('click', e => handleStopClick(canvas, e));
 
+// normalize key when listening to stopPitch so custom bindings work reliably
 document.addEventListener('keydown', e => {
-    if (e.key === stopPitchKey && gameState === 'defense' && !pickoffInProgress && slider.active && !slider.stopped) {
+    const keyName = (typeof normalizeKeyName === 'function') ? normalizeKeyName(e.key) : e.key;
+    if (keyName === stopPitchKey && gameState === 'defense' && !pickoffInProgress && slider.active && !slider.stopped) {
         triggerStopPitch();
     }
 });
@@ -525,4 +527,3 @@ function returnBallToPitcher() {
     endAnimation();
   }, returnSpeed);
 }
-

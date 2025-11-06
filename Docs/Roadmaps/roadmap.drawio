@@ -1,0 +1,119 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 Edg/141.0.0.0" version="28.2.8">
+  <diagram name="Baseball Game System Diagram - Updated" id="0">
+    <mxGraphModel dx="760" dy="1377" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="2339" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Baseball Game&lt;/font&gt;&lt;br&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;•&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;Game Logic (2 Teams, baseball rules, Player position editor)&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;•&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;Canvas Rendering&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;•&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;Controls (Strikeouts, Ballfours, stealing, pickoffs, hitting, pitching, throwing)&lt;br&gt;&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-weight: 400; background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;•&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;Settings (Volume, Screen mode, binds...)&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;•&lt;/span&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;&amp;nbsp;Basic Game as a Simulator&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-weight: 400; background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;•&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;Registraions and logins&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#cde7ff;fontSize=14;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="380" y="80" width="300" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="3" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Web App&lt;/font&gt;&lt;div&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;• Subpages - About, How to play, Rules, Support, Info about game (Bugs, Maintenance...), Dowload game, Stats&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;• Registraions and logins connected with game&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;• Stats - Leaderboard who played most games, Scores of games&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;• Responsivity&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d0ffd4;fontSize=14;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="80" y="350" width="300" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="4" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Database&lt;/font&gt;&lt;br&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;•&amp;nbsp;User logins and registraions&lt;br&gt;&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-weight: 400; background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;•&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;Count of games played for each user&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-weight: 400; background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;•&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;Match history - scores of the games&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe0b3;fontSize=14;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="680" y="350" width="300" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="8" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;✅ CURRENT DELIVERABLES&lt;/font&gt;&lt;br&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;• Functional Game - The game wil currently be a 2D simulator for throwing, pitching and hitting&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;• Player will be playing against an AI opponent&lt;br&gt;• The game will be package as a classic application through Electron using Javascript, HTML and CSS&lt;br&gt;• Basic Web using data from Database, Registraions and logins, Game download, About, Rules, How to play...&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;• Database numbers of games played, Score of the games, registraions and logins&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eaffea;fontSize=14;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="30" y="580" width="400" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="9" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;🚀 FUTURE ENHANCEMENTS&lt;/font&gt;&lt;br&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;• PVP Mode&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;• Full game, no simulator&lt;br&gt;• More teams&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;• Better graphics&lt;/span&gt;&lt;/div&gt;&lt;div&gt;• &lt;span style=&quot;font-weight: normal;&quot;&gt;Better sounds&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;• Mobile Version&lt;br&gt;• Leagues (MLB, MiLB, College...)&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;• Career mode&lt;br&gt;• Match History + Advanced Stats&lt;br&gt;• Better AI&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f0ff;fontSize=14;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="620" y="580" width="400" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="5" style="endArrow=block;html=1;" parent="1" source="2" target="3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6" style="endArrow=block;html=1;" parent="1" source="2" target="4" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sA1Qhv3GmMkgpU3Q8cY5-9" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="3" target="4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="500" y="460" as="sourcePoint" />
+            <mxPoint x="560" y="460" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sA1Qhv3GmMkgpU3Q8cY5-10" value="&lt;font style=&quot;font-size: 30px;&quot;&gt;&lt;b style=&quot;&quot;&gt;2D Baseball&lt;/b&gt;&lt;/font&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="400" y="10" width="240" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="sA1Qhv3GmMkgpU3Q8cY5-15" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;🏢 FUTURE PLANS FOR COMPANY&lt;/font&gt;&lt;br&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;• Rename 2D Baseball Company to 2D Sports Company&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;• Have as many 2D sports games as posible&lt;br&gt;• Games like - Soccer, Football, Baseball, Basketball and more&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;• Have a main Websites 2D Sports&lt;/span&gt;&lt;/div&gt;&lt;div&gt;• &lt;span style=&quot;font-weight: normal;&quot;&gt;Have a Subwebsites for each game&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;• Mobile Versions for each game&lt;br&gt;&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f0ff;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="310" y="840" width="400" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="sA1Qhv3GmMkgpU3Q8cY5-16" value="" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.containers.browserWindow;rSize=0;strokeColor=#666666;strokeColor2=#008cff;strokeColor3=#c4c4c4;mainText=,;recursiveResize=0;" vertex="1" parent="1">
+          <mxGeometry x="30" y="1190" width="960" height="755" as="geometry" />
+        </mxCell>
+        <mxCell id="sA1Qhv3GmMkgpU3Q8cY5-17" value="2D Baseball" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.containers.anchor;fontSize=17;fontColor=#666666;align=left;whiteSpace=wrap;" vertex="1" parent="sA1Qhv3GmMkgpU3Q8cY5-16">
+          <mxGeometry x="60" y="12" width="110" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="sA1Qhv3GmMkgpU3Q8cY5-18" value="https://www.2dbaseball.com" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.containers.anchor;rSize=0;fontSize=17;fontColor=#666666;align=left;" vertex="1" parent="sA1Qhv3GmMkgpU3Q8cY5-16">
+          <mxGeometry x="130" y="60" width="250" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="sA1Qhv3GmMkgpU3Q8cY5-20" value="" style="swimlane;shape=mxgraph.bootstrap.anchor;strokeColor=none;fillColor=#ffffff;fontColor=light-dark(#0000FF, #ffffff);fontStyle=0;childLayout=stackLayout;horizontal=0;startSize=0;horizontalStack=1;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="sA1Qhv3GmMkgpU3Q8cY5-16">
+          <mxGeometry x="170" y="120" width="500" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="sA1Qhv3GmMkgpU3Q8cY5-21" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;About&lt;/font&gt;" style="text;strokeColor=none;align=center;verticalAlign=middle;spacingLeft=10;spacingRight=10;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fillColor=none;fontColor=light-dark(#FFFFFF,#F7F7F7);fontSize=17;textShadow=0;" vertex="1" parent="sA1Qhv3GmMkgpU3Q8cY5-20">
+          <mxGeometry width="70" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="sA1Qhv3GmMkgpU3Q8cY5-22" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;How to play&lt;/font&gt;" style="text;strokeColor=inherit;align=center;verticalAlign=middle;spacingLeft=10;spacingRight=10;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fillColor=inherit;fontColor=inherit;fontSize=17;" vertex="1" parent="sA1Qhv3GmMkgpU3Q8cY5-20">
+          <mxGeometry x="70" width="110" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="sA1Qhv3GmMkgpU3Q8cY5-23" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Rules&lt;/font&gt;" style="text;strokeColor=inherit;align=center;verticalAlign=middle;spacingLeft=10;spacingRight=10;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fillColor=inherit;fontColor=inherit;fontSize=17;" vertex="1" parent="sA1Qhv3GmMkgpU3Q8cY5-20">
+          <mxGeometry x="180" width="70" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="sA1Qhv3GmMkgpU3Q8cY5-24" value="Leaderboard" style="text;strokeColor=inherit;align=center;verticalAlign=middle;spacingLeft=10;spacingRight=10;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fillColor=inherit;fontColor=inherit;fontSize=17;" vertex="1" parent="sA1Qhv3GmMkgpU3Q8cY5-20">
+          <mxGeometry x="250" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="sA1Qhv3GmMkgpU3Q8cY5-26" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Support&lt;/font&gt;" style="text;strokeColor=inherit;align=center;verticalAlign=middle;spacingLeft=10;spacingRight=10;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fillColor=inherit;fontColor=inherit;fontSize=17;" vertex="1" parent="sA1Qhv3GmMkgpU3Q8cY5-20">
+          <mxGeometry x="370" width="80" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="sA1Qhv3GmMkgpU3Q8cY5-27" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Info&lt;/font&gt;" style="text;strokeColor=inherit;align=center;verticalAlign=middle;spacingLeft=10;spacingRight=10;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fillColor=inherit;fontColor=inherit;fontSize=17;" vertex="1" parent="sA1Qhv3GmMkgpU3Q8cY5-20">
+          <mxGeometry x="450" width="50" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="sA1Qhv3GmMkgpU3Q8cY5-28" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Download&lt;/font&gt;" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.buttons.button;strokeColor=#666666;fontColor=#ffffff;mainText=;buttonStyle=round;fontSize=17;fontStyle=1;fillColor=#008cff;whiteSpace=wrap;" vertex="1" parent="sA1Qhv3GmMkgpU3Q8cY5-16">
+          <mxGeometry x="830" y="120" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="sA1Qhv3GmMkgpU3Q8cY5-29" value="" style="verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;html=1;verticalAlign=top;strokeWidth=1;shape=mxgraph.mockup.graphics.simpleIcon;strokeColor=#999999;" vertex="1" parent="sA1Qhv3GmMkgpU3Q8cY5-16">
+          <mxGeometry x="20" y="120" width="90" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="sA1Qhv3GmMkgpU3Q8cY5-30" value="&lt;b&gt;LOGO&lt;/b&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;strokeWidth=1;fontSize=16;" vertex="1" parent="sA1Qhv3GmMkgpU3Q8cY5-16">
+          <mxGeometry x="35" y="130" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="sA1Qhv3GmMkgpU3Q8cY5-31" value="" style="verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;html=1;verticalAlign=top;strokeWidth=1;shape=mxgraph.mockup.graphics.simpleIcon;strokeColor=#999999;" vertex="1" parent="sA1Qhv3GmMkgpU3Q8cY5-16">
+          <mxGeometry y="220" width="960" height="360" as="geometry" />
+        </mxCell>
+        <mxCell id="sA1Qhv3GmMkgpU3Q8cY5-32" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;Main Game Image&lt;/font&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" vertex="1" parent="sA1Qhv3GmMkgpU3Q8cY5-16">
+          <mxGeometry x="390" y="240" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="sA1Qhv3GmMkgpU3Q8cY5-33" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Download&lt;/font&gt;" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.buttons.button;strokeColor=#666666;fontColor=#ffffff;mainText=;buttonStyle=round;fontSize=17;fontStyle=1;fillColor=#008cff;whiteSpace=wrap;" vertex="1" parent="sA1Qhv3GmMkgpU3Q8cY5-16">
+          <mxGeometry x="340" y="490" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="sA1Qhv3GmMkgpU3Q8cY5-34" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;About&lt;/font&gt;" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.buttons.button;strokeColor=#666666;fontColor=#ffffff;mainText=;buttonStyle=round;fontSize=17;fontStyle=1;fillColor=#008cff;whiteSpace=wrap;" vertex="1" parent="sA1Qhv3GmMkgpU3Q8cY5-16">
+          <mxGeometry x="500" y="490" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="sA1Qhv3GmMkgpU3Q8cY5-35" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Short text about game and stuff&lt;/font&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" vertex="1" parent="sA1Qhv3GmMkgpU3Q8cY5-16">
+          <mxGeometry x="370" y="440" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="sA1Qhv3GmMkgpU3Q8cY5-36" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;b&gt;Subpages&lt;/b&gt;&lt;/font&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" vertex="1" parent="sA1Qhv3GmMkgpU3Q8cY5-16">
+          <mxGeometry x="95" y="590" width="85" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="sA1Qhv3GmMkgpU3Q8cY5-37" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;b&gt;Socials&lt;/b&gt;&lt;/font&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" vertex="1" parent="sA1Qhv3GmMkgpU3Q8cY5-16">
+          <mxGeometry x="437.5" y="590" width="85" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="sA1Qhv3GmMkgpU3Q8cY5-38" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;b&gt;Support&lt;/b&gt;&lt;/font&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" vertex="1" parent="sA1Qhv3GmMkgpU3Q8cY5-16">
+          <mxGeometry x="745" y="590" width="85" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="sA1Qhv3GmMkgpU3Q8cY5-39" value="-Line 1&#xa;-Line 2&#xa;-Line 3&#xa;-Line 4" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.text.bulletedList;textColor=#666666;mainText=,,,,;textSize=17;bulletStyle=none;strokeColor=none;fillColor=none;align=left;verticalAlign=top;fontSize=17;fontColor=#666666;" vertex="1" parent="sA1Qhv3GmMkgpU3Q8cY5-16">
+          <mxGeometry x="100" y="620" width="150" height="135" as="geometry" />
+        </mxCell>
+        <mxCell id="sA1Qhv3GmMkgpU3Q8cY5-40" value="-Line 1&#xa;-Line 2&#xa;-Line 3&#xa;-Line 4" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.text.bulletedList;textColor=#666666;mainText=,,,,;textSize=17;bulletStyle=none;strokeColor=none;fillColor=none;align=left;verticalAlign=top;fontSize=17;fontColor=#666666;" vertex="1" parent="sA1Qhv3GmMkgpU3Q8cY5-16">
+          <mxGeometry x="450" y="620" width="150" height="135" as="geometry" />
+        </mxCell>
+        <mxCell id="sA1Qhv3GmMkgpU3Q8cY5-41" value="-Line 1&#xa;-Line 2&#xa;-Line 3&#xa;-Line 4" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.text.bulletedList;textColor=#666666;mainText=,,,,;textSize=17;bulletStyle=none;strokeColor=none;fillColor=none;align=left;verticalAlign=top;fontSize=17;fontColor=#666666;" vertex="1" parent="sA1Qhv3GmMkgpU3Q8cY5-16">
+          <mxGeometry x="755" y="620" width="150" height="135" as="geometry" />
+        </mxCell>
+        <mxCell id="sA1Qhv3GmMkgpU3Q8cY5-19" value="Webiste Layout" style="text;strokeColor=none;fillColor=none;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;" vertex="1" parent="1">
+          <mxGeometry x="370" y="1110" width="280" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,73 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0" version="28.2.9">
+  <diagram name="2D Baseball ER Diagram" id="baseball-er-diagram">
+    <mxGraphModel dx="872" dy="412" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="game" value="Game PK game_id inning score_home score_away current_pitcher_id current_batter_id" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+          <mxGeometry x="300" y="50" width="200" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="team" value="Team PK team_id name color" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+          <mxGeometry x="50" y="250" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="player" value="Player PK player_id FK team_id name position batting_average running_speed" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+          <mxGeometry x="300" y="250" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="pitch" value="Pitch PK pitch_id FK game_id FK pitcher_id type speed outcome" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+          <mxGeometry x="550" y="50" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="hit" value="Hit PK hit_id FK pitch_id FK batter_id hit_type distance" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+          <mxGeometry x="550" y="200" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="steal" value="Steal PK steal_id FK player_id base_from base_to success" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;" parent="1" vertex="1">
+          <mxGeometry x="800" y="50" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="pickoff" value="Pickoff PK pickoff_id FK pitcher_id FK player_id base success" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+          <mxGeometry x="790" y="200" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_game_team1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#6c8ebf;endArrow=block;endFill=1;" parent="1" source="game" target="team" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_game_team2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#6c8ebf;endArrow=block;endFill=1;" parent="1" source="game" target="team" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_team_player" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#82b366;endArrow=block;endFill=1;" parent="1" source="team" target="player" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_game_pitch" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#b85450;endArrow=block;endFill=1;" parent="1" source="game" target="pitch" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_player_pitch" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#d6b656;endArrow=block;endFill=1;" parent="1" source="player" target="pitch" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="760" y="330" />
+              <mxPoint x="760" y="110" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel_pitch_hit" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#9673a6;endArrow=block;endFill=1;" parent="1" source="pitch" target="hit" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_player_hit" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#9673a6;endArrow=block;endFill=1;" parent="1" source="player" target="hit" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_player_steal" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#999999;endArrow=block;endFill=1;" parent="1" source="player" target="steal" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1010" y="350" />
+              <mxPoint x="1010" y="110" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel_player_pickoff" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#d79b00;endArrow=block;endFill=1;" parent="1" source="player" target="pickoff" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="770" y="340" />
+              <mxPoint x="770" y="260" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

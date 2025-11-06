@@ -1,0 +1,116 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0" version="28.2.9" pages="2">
+  <diagram name="Runner Advancement" id="runner-advancement">
+    <mxGraphModel dx="2293" dy="693" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ra_start" value="Hit nebo Walk nastanou" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+          <mxGeometry x="300" y="20" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ra_decision" value="Typ Hitu?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+          <mxGeometry x="300" y="110" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ra_walk" value="Walk - Pošli běžce na 1B a všichni běžci + 1 meta" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;" parent="1" vertex="1">
+          <mxGeometry x="-30" y="220" width="240" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ra_single" value="Single: všichni běžci +1 base" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+          <mxGeometry x="300" y="210" width="240" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ra_double" value="Double: všichni běžci&amp;nbsp;+2 bases" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+          <mxGeometry x="300" y="300" width="240" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ra_triple" value="Triple: všichni běžci&amp;nbsp;+3 bases" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+          <mxGeometry x="300" y="390" width="240" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ra_hr" value="Homerun: všichni běžci&amp;nbsp;dají bod" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+          <mxGeometry x="300" y="480" width="240" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ra_update" value="Update skóre bases" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;" parent="1" vertex="1">
+          <mxGeometry x="300" y="580" width="240" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ra_end" value="Posunutí běžců u konce" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+          <mxGeometry x="300" y="680" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ra_e1" style="endArrow=block;endFill=1;" parent="1" source="ra_start" target="ra_decision" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ra_e2" style="endArrow=block;endFill=1;entryX=0.421;entryY=0.016;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="ra_decision" target="ra_single" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ra_e3" style="endArrow=block;endFill=1;exitX=1;exitY=1;exitDx=0;exitDy=0;" parent="1" source="ra_decision" target="ra_double" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="670" y="160" />
+              <mxPoint x="670" y="335" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ra_e4" style="endArrow=block;endFill=1;exitX=0.399;exitY=0.935;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="ra_decision" target="ra_triple" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="260" y="166" />
+              <mxPoint x="260" y="425" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ra_e5" style="endArrow=block;endFill=1;exitX=0;exitY=1;exitDx=0;exitDy=0;" parent="1" source="ra_decision" target="ra_hr" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="230" y="150" />
+              <mxPoint x="230" y="515" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ra_e6" style="endArrow=block;endFill=1;" parent="1" source="ra_start" target="ra_walk" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="90" y="50" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ra_e7" style="endArrow=block;endFill=1;" parent="1" target="ra_update" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="540" y="240" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="580" y="240" />
+              <mxPoint x="620" y="240" />
+              <mxPoint x="620" y="430" />
+              <mxPoint x="620" y="610" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ra_e8" style="endArrow=block;endFill=1;exitX=0.997;exitY=0.708;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.997;entryY=0.139;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="ra_double" target="ra_update" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="580" y="350" />
+              <mxPoint x="580" y="590" />
+              <mxPoint x="560" y="590" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ra_e9" style="endArrow=block;endFill=1;exitX=0.002;exitY=0.711;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.011;entryY=0.139;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="ra_triple" target="ra_update" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="260" y="440" />
+              <mxPoint x="260" y="590" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ra_e10" style="endArrow=block;endFill=1;" parent="1" source="ra_hr" target="ra_update" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ra_e11" style="endArrow=block;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="ra_walk" target="ra_update" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="90" y="615" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ra_e12" style="endArrow=block;endFill=1;" parent="1" source="ra_update" target="ra_end" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+</mxfile>

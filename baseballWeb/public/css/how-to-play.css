@@ -1,0 +1,152 @@
+.how-page {
+    background: linear-gradient(
+        180deg,
+        #001a36 0%,
+        rgb(17, 17, 17) 30%,
+        rgb(17, 17, 17) 100%
+    );
+    padding-bottom: 80px;
+    text-align: center;
+}
+
+.how-hero {
+    padding: 110px 20px 70px;
+}
+
+.how-hero h1 {
+    font-size: 3rem;
+    color: #eee;
+    -webkit-text-stroke: 1px #000;
+}
+
+.how-hero p {
+    font-size: 1.2rem;
+    color: #bbb;
+}
+
+.controls-section {
+    max-width: 1000px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.controls-grid {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 30px;
+}
+
+.control-box {
+    background: #1a1a1a;
+    padding: 25px;
+    border-radius: 12px;
+    width: 230px;
+    transition: transform .2s;
+}
+
+.control-box:hover {
+    transform: translateY(-6px);
+}
+
+.step:hover, .tip-box:hover {
+    transform: translateY(-6px);
+}
+
+.control-box i {
+    font-size: 1.5rem;
+}
+
+.steps-section {
+    margin: 100px auto;
+    max-width: 1100px;
+    padding: 0 20px;
+}
+
+.steps-wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 35px;
+    margin-top: 40px;
+}
+
+.step {
+    background: #1a1a1a;
+    padding: 25px;
+    border-radius: 12px;
+    position: relative;
+    transition: transform .2s;
+}
+
+.step-number {
+    background: #275ea7;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-weight: bold;
+    margin: 0 auto 10px;
+}
+
+.tips-section {
+    max-width: 1100px;
+    margin: 100px auto;
+    padding: 0 20px;
+}
+
+.tips-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-top: 35px;
+}
+
+.tip-box {
+    background: #222;
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 4px solid #275ea7;
+    transition: transform .2s;
+}
+
+.cta-download {
+    margin-top: 70px;
+}
+
+@media (max-width: 900px) {
+    .how-page {
+        background: linear-gradient(
+            180deg,
+            #001a36 0%,
+            rgb(17, 17, 17) 15%,
+            rgb(17, 17, 17) 100%
+        );
+    }
+}
+
+@media (max-width: 950px) {
+    .steps-wrapper {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .tips-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .controls-grid {
+        flex-direction: column;
+    }
+
+    .control-box {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .steps-wrapper,
+    .tips-grid {
+        grid-template-columns: 1fr;
+    }
+}

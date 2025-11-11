@@ -1,0 +1,92 @@
+.main-content::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url('../images/background/field.png');
+    background-size: cover;
+    background-position: center;
+    filter: blur(6px);
+    z-index: -2;
+}
+
+.main-content::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: 
+        linear-gradient(to bottom, rgba(0,0,0,0.9), rgba(0,0,0,0) 250px),
+        linear-gradient(to right,
+            rgba(0, 0, 0, 0.8) 0%,
+            rgba(0, 0, 0, 0.7) 5%,
+            rgba(0, 0, 0, 0.6) 10%,
+            rgba(0, 0, 0, 0.5) 15%,
+            rgba(0, 0, 0, 0.4) 20%,
+            rgba(0, 0, 0, 0.3) 25%,
+            rgba(0, 0, 0, 0.2) 30%,
+            rgba(0, 0, 0, 0) 40%,
+            rgba(0, 0, 0, 0) 60%,
+            rgba(0, 0, 0, 0.1) 65%,
+            rgba(0, 0, 0, 0.2) 70%,
+            rgba(0, 0, 0, 0.3) 75%,
+            rgba(0, 0, 0, 0.4) 80%,
+            rgba(0, 0, 0, 0.5) 85%,
+            rgba(0, 0, 0, 0.6) 90%,
+            rgba(0, 0, 0, 0.7) 95%,
+            rgba(0, 0, 0, 0.8) 100%
+        );
+    z-index: -1;
+}
+
+.home-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    min-height: 87vh;
+    padding-bottom: 40px;
+    color: rgb(17, 17, 17);
+    text-align: center;
+    gap: 20px;
+}
+
+.home-center h1 {
+    font-family: 'Jersey 10', sans-serif;
+    font-size: 5rem;
+    margin: 0;
+    color: rgb(133, 133, 133);
+    -webkit-text-stroke: 1px #000000;
+    text-stroke: 1px #000000;
+}
+
+.home-center p {
+    font-size: 1.2rem;
+    font-style: italic;
+    max-width: 600px;
+}
+
+.home-center .buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.home-center .buttons a:first-child {
+    background-color: transparent;
+    border: 2px solid #275ea7;
+}
+
+.home-center .buttons a {
+    padding: 12px 24px;
+    background-color: #275ea7;
+    border: 2px solid #275ea7;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.home-center .buttons a:hover {
+    background-color: #163e79;
+    border: 2px solid #163e79;
+}
+

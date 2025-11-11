@@ -1,24 +1,57 @@
 <?php
-$pageTitle = "2D Baseball | Home";
-$pageDescription = "Homepage for 2D Baseball Simulator includes download and other.";
-?>
-<!DOCTYPE html>
-<html lang="en">
+$baseUrl = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/') . '/';
 
-<head>
-    <?php include 'shared/head.php'; ?>
-</head>
+$route = $_GET['route'] ?? '';
+$route = rtrim($route, '/');
 
-<body>
+switch ($route) {
+    case '':
+        $view = 'home';
+        break;
 
-    <?php include 'shared/header.php'; ?>
+    case 'about':
+        $view = 'about';
+        break;
 
-    <main>
-        <h2>Vítej na homepage!</h2>
-        <p>Tady bude obsah. Snad nebude stát za hovno.</p>
-    </main>
+    case 'how-to-play':
+        $view = 'how-to-play';
+        break;
 
-    <?php include 'shared/footer.php'; ?>
+    case 'rules':
+        $view = 'rules';
+        break;
 
-</body>
-</html>
+    case 'leaderboard':
+        $view = 'leaderboard';
+        break;
+
+    case 'support':
+        $view = 'support';
+        break;
+
+    case 'info':
+        $view = 'info';
+        break;
+
+    default:
+        http_response_code(404);
+        $view = '404';
+        break;
+}
+
+if ($view) {
+    ob_start();
+    require __DIR__ . "/app/views/$view.php";
+    $content = ob_get_clean();
+    ?>
+    <!DOCTYPE html>
+    <html lang="en">
+    <?php require __DIR__ . '/app/views/layout/head.php'; ?>
+    <body>
+        <?php require __DIR__ . '/app/views/layout/header.php'; ?>
+        <?= $content ?>
+        <?php require __DIR__ . '/app/views/layout/footer.php'; ?>
+    </body>
+    </html>
+    <?php
+}

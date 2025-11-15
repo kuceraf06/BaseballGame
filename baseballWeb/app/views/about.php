@@ -17,7 +17,7 @@ $pageCSS = '<link rel="stylesheet" href="' . $baseUrl . 'public/css/about.css?v=
         </div>
         <div class="about-text">
             <h2>Game Origins</h2>
-            <p>2D Baseball started as a small project that I began creating during the holidays in my free time out of a passion for programming. What started as a simple concept has evolved into a growing simulator with realistic mechanics and unique gameplay. Currently, the game allows you to try pitching, batting, throwing, stealing bases, etc. Unfortunately, for now there is only a version against an AI opponent.</p>
+            <p>2D Baseball started as a small project that I began creating during the holidays in my free time out of a passion for programming. What started as a simple concept has evolved into a growing simulator with realistic mechanics and unique gameplay. Currently, the game allows you to try pitching, batting, throwing, stealing bases, etc. For now there is only a version against an AI opponent.</p>
         </div>
     </section>
 
@@ -27,7 +27,7 @@ $pageCSS = '<link rel="stylesheet" href="' . $baseUrl . 'public/css/about.css?v=
         </div>
         <div class="about-text">
             <h2>Future Enhancements</h2>
-            <p>In the future, we would like to expand the game into a full-fledged 2D Baseball, where you could play in various leagues, from the least known ones to the Major League itself. You would be able to choose a team to play for, or create your own team with your own players!<br>
+            <p>In the future, we would like to expand the game into a full-fledged 2D Baseball, where you could play in various leagues, from the least known ones to the Major League itself. You would be able to choose a team to play for or create your own team with your own players!<br>
             This will be possible if the game becomes popular and it makes sense to expand the game in this way.</p>
         </div>
     </section>
@@ -38,7 +38,7 @@ $pageCSS = '<link rel="stylesheet" href="' . $baseUrl . 'public/css/about.css?v=
         </div>
         <div class="about-text">
             <h2>Future Plans For Company</h2>
-            <p>We have big plans for our community, specifically, if we succeed in this game format, we would like to rename the company 2D Baseball to 2D Sports and develop all possible kinds of sports in a 2D pixel art interface. For example, soccer, American football, hockey, basketball, and many more!</p>
+            <p>We have big plans for our community; specifically, if we succeed in this game format, we would like to rename the company 2D Baseball to 2D Sports and develop all possible kinds of sports in a 2D pixel art interface. For example, soccer, American football, hockey, basketball, and many more!</p>
         </div>
     </section>
 

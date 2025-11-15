@@ -45,7 +45,7 @@ $pageCSS = '<link rel="stylesheet" href="' . $baseUrl . 'public/css/how-to-play.
             <div class="step">
                 <div class="step-number">3</div>
                 <h3>Players positon</h3>
-                <p>Select a player give him the right positon to make throwing easy.</p>
+                <p>Select a player, give him the right positon to make throwing easy.</p>
             </div>
 
             <div class="step">
@@ -74,7 +74,7 @@ $pageCSS = '<link rel="stylesheet" href="' . $baseUrl . 'public/css/how-to-play.
             <div class="step">
                 <div class="step-number">3</div>
                 <h3>Choose&nbsp;good&nbsp;pitches</h3>
-                <p>choose good pitches, free bases are also the way.</p>
+                <p>Choose good pitches, free bases are also the way.</p>
             </div>
 
             <div class="step">

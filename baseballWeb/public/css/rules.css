@@ -1,0 +1,261 @@
+.rules-page {
+    background: linear-gradient(
+        180deg,
+        #001a36 0%,
+        rgb(17, 17, 17) 30%,
+        rgb(17, 17, 17) 100%
+    );
+    padding-bottom: 80px;
+    text-align: center;
+}
+
+.rules-hero {
+    padding: 110px 20px 70px;
+}
+
+.rules-hero h1 {
+    font-size: 3rem;
+    line-height: .8;
+    font-weight: 700;
+    color: #eee;
+}
+
+.rules-hero h1 span {
+    font-family: 'Jersey 10', sans-serif;
+    font-size: 5rem;
+    margin: 0;
+    margin-left: 5px;
+    color: rgb(133, 133, 133);
+    -webkit-text-stroke: 1px #000000;
+    text-stroke: 1px #000000;
+}
+
+.rules-hero p {
+    margin-top: 12px;
+    color: #bbb;
+    font-size: 1.2rem;
+    max-width: 600px;
+    width: 100%;
+    font-style: italic;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.rules-intro {
+    max-width: 900px;
+    margin: 60px auto;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.rules-intro h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #eee;
+}
+
+.rules-intro p {
+    font-size: 1.1rem;
+    color: #ccc;
+    line-height: 1.7;
+}
+
+.rules-timeline {
+    position: relative;
+    max-width: 800px;
+    padding-left: 40px;
+    padding-right: 40px;
+    margin: 80px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.rules-timeline::before {
+    content: "";
+    position: absolute;
+    top: 25px;
+    left: 55px;
+    width: 4px;
+    height: calc(100% - 100px);
+    background: rgba(39, 94, 167, 0.4);
+}
+
+.rule-step {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+}
+
+.rule-number {
+    position: relative;
+    z-index: 2;
+    background: #275ea7;
+    color: #fff;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.rule-content {
+    margin-left: 20px;
+    margin-right: 20px;
+    max-width: 600px;
+}
+
+.rule-content h3 {
+    font-size: 1.4rem;
+    color: #eee;
+    margin-bottom: 5px;
+}
+
+.rule-content p {
+    color: #ccc;
+}
+
+.rules-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    max-width: 1100px;
+    margin: 80px auto;
+    padding: 0 20px;
+}
+
+.rule-card {
+    background: #1a1a1a;
+    border-radius: 12px;
+    text-align: center;
+    padding: 30px 20px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.rule-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+.first {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 15px;
+}
+
+.second {
+    width: 65px;
+    height: 65px;
+    margin-bottom: 0px;
+}
+
+.third {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 5px;
+}
+
+.rule-card img {
+    object-fit: contain;
+    filter: brightness(0.9);
+}
+
+.rule-card p {
+    color: #ccc;
+}
+
+.sim-rules {
+    margin: 80px auto 60px;
+    margin-bottom: 0;
+    max-width: 900px;
+    padding: 40px 25px 55px;
+    text-align: center;
+}
+
+.sim-header img {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 15px;
+    filter: brightness(0.9);
+}
+
+.sim-header h2 {
+    color: #eee;
+    font-size: 2.1rem;
+    margin-bottom: 10px;
+}
+
+.sim-header p {
+    color: #ccc;
+    font-size: 1.05rem;
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+.sim-rule-list {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.sim-rule-item {
+    background: #1a1a1a;
+    padding: 25px 20px;
+    border-radius: 14px;
+    text-align: left;
+    border-left: 4px solid #275ea7;
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.sim-rule-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.45);
+}
+
+.sim-rule-item h3 {
+    color: #eee;
+    font-size: 1.25rem;
+    margin-bottom: 5px;
+}
+
+.sim-rule-item p {
+    color: #ccc;
+    line-height: 1.6;
+}
+
+/* Responsive */
+
+
+@media (max-width: 839px) {
+    .rules-cards {
+        display: flex;
+        flex-direction: column;
+        max-width: 600px;
+    }
+}
+
+@media (max-width: 720px) {
+    .rules-timeline::before {
+        height: calc(100% - 135px);
+    }
+}
+
+@media (max-width: 600px) {
+    .sim-rules {
+        padding: 35px 20px;
+    }
+    .sim-rule-item {
+        padding: 20px 18px;
+    }
+}
+
+@media (max-width: 453px) {
+    .rules-timeline::before {
+        height: calc(100% - 185px);
+    }
+}
+
